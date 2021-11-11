@@ -11,17 +11,21 @@ import javafx.scene.layout.*;
 
 public class Main extends Application {
 	
-	Label label01;
+	Label label01, label02;
+	String team = "";
+
 	
 	@Override
 	public void start(Stage primaryStage) {
 		Stage window= primaryStage;
 		Scene gamesetup;
+		Scene gamesetup2;
 		Scene mainmenu;
 		
 		window.setTitle("J@buzzz");
 		
 		label01 = new Label ("Choose");
+		label02 = new Label();
 		VBox vbox = new VBox(6);
 		
 		
@@ -48,6 +52,8 @@ public class Main extends Application {
 		//button04.setText("Go back");
 		//button04.setStyle("-fx-font: 50 arial; -fx-base: #b6a7c9;"); 
 		
+		StackPane layout03 = new StackPane();
+		layout03.getChildren().add(label02);
 		StackPane layout02 = new StackPane ();
 		//layout02.getChildren().add(button04);
 		layout02.getChildren().add(label01);
@@ -55,9 +61,11 @@ public class Main extends Application {
 		
 		mainmenu = new Scene(vbox, 400, 400);
 		gamesetup = new Scene (layout02, 400, 400);
+		gamesetup2 = new Scene(layout03, 400, 400);
 
 		button01.setOnAction(e -> window.setScene(gamesetup));
 		//button04.setOnAction(e -> window.setScene(mainmenu));
+		button03.setOnAction(e -> System.exit(0));
 		
 		gamesetup.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
@@ -66,15 +74,40 @@ public class Main extends Application {
 				
 				switch(event.getCode()){
 				case A:
-					label01.setText("Team A is playing:");
+					//System.out.println("Hello A");
+					team = "Team A";
 					break;
 				case L:
-					System.out.println("MOVIN' UP!");
+					//System.out.println("Hello L");
+					team = "Team B";
+					break;
+				case ESCAPE:
+					System.exit(0);
 					break;
 				default:
 					break;
 				}		
+				
+				label02.setText(team + " is playing");
+				window.setScene(gamesetup2);
 			}	
+		});
+		
+		gamesetup2.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(KeyEvent event) {
+				switch (event.getCode()) {
+				case ESCAPE:
+					System.exit(0);
+					break;
+				case B:
+					window.setScene(gamesetup);
+					break;
+				default:
+					break;
+				}
+			}
 		});
 		
 		window.setScene(mainmenu);
