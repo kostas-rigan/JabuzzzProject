@@ -1,4 +1,4 @@
-package application;
+package gr.aueb.dmst.jabuzzz.application;
 	
 import javafx.application.Application;
 import javafx.stage.Stage;
