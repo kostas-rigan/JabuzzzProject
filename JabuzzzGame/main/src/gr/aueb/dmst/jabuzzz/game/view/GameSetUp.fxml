@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="673.0" prefWidth="985.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Game.view.GameSetUpController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="673.0" prefWidth="985.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gr.aueb.dmst.jabuzzz.game.view.GameSetUpController">
    <children>
       <TextField layoutX="273.0" layoutY="115.0" promptText="ΟμάδαΑ" />
       <TextField layoutX="273.0" layoutY="164.0" promptText="ΟμάδαΒ" />
@@ -55,7 +55,7 @@
             <Font size="25.0" />
          </font>
       </Text>
-      <Button layoutX="441.0" layoutY="573.0" mnemonicParsing="false" text="Πάμε!">
+      <Button layoutX="441.0" layoutY="573.0" mnemonicParsing="false" onAction="#start" text="Πάμε!">
          <font>
             <Font size="25.0" />
          </font>
