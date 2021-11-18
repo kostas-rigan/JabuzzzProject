@@ -1,6 +1,14 @@
 package utilities;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import static java.util.concurrent.TimeUnit.SECONDS;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
 import gr.aueb.dmst.jabuzzz.entities.Team;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
@@ -12,6 +20,7 @@ import javafx.stage.Stage;
 
 public class BuzzerController {
 	private Team playingTeam;
+	private int interval = 5;
 
 	public void buzz(KeyCode keyCode, String[] displays, Stage primaryStage) {
 		// setting up a new scene
@@ -21,7 +30,8 @@ public class BuzzerController {
 		teamBDisplay.setFont(Font.font(Font.getDefault().getFamily(), 18));
 		HBox hBox = new HBox(100, teamADisplay, teamBDisplay);
 		Label messageLabel = new Label("");
-		VBox vBox = new VBox(150, hBox, messageLabel);
+		Label timerLabel = new Label(Integer.toString(interval));
+		VBox vBox = new VBox(150, hBox, messageLabel, timerLabel);
 		Scene afterBuzzerScene = new Scene(vBox, 400, 400);
 		// using try catch to handle NullPointerException
 		try {
@@ -43,6 +53,21 @@ public class BuzzerController {
 				messageLabel.setText(playingTeam + " buzzed it!!!");
 				primaryStage.setScene(afterBuzzerScene);
 				primaryStage.show();
+				// making a new Timer object for countdown
+				Timer timer = new Timer();
+				// this will start the countdown, changing time left at a fixed rate
+			    timer.scheduleAtFixedRate(new TimerTask() {
+			        public void run() {
+			            if(interval > 0)
+			            {
+			                Platform.runLater(() -> timerLabel.setText(Integer.toString(interval)));
+			                //System.out.println(interval);
+			                interval--;
+			            }
+			            else
+			                timer.cancel();
+			        }
+			    }, 1000,1000);
 			}
 		} catch (NullPointerException e) {
 			// TODO: handle exception
