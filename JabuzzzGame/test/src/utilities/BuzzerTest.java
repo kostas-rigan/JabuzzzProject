@@ -56,7 +56,7 @@ public class BuzzerTest extends Application{
 			@Override
 			public void handle(KeyEvent event) {
 				// call of the actual buzz method in our buzzer
-				String[] displays = {teamADisplay.getText(), teamBDisplay.getText()};
+				Team[] displays = {teamA, teamB};
 				buzzer.buzz(event.getCode(), displays, primaryStage);
 				
 			}
