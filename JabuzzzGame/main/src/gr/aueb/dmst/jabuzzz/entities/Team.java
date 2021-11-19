@@ -32,7 +32,7 @@ public class Team {
 	 * 
 	 * @return team's current name
 	 */
-	public String getTeamName() {
+	public String getTeamName() { 
 		return teamName;
 	}
 
