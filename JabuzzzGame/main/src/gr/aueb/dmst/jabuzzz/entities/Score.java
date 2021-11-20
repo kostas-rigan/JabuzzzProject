@@ -3,8 +3,8 @@ package gr.aueb.dmst.jabuzzz.entities;
 import gr.aueb.dmst.jabuzzz.utilities.Exit;
 
 public class Score {
-	int teamsScore;
-	int target;
+	private int teamsScore;
+	private int target;
 	
 	public Score(int target) {
 		teamsScore = 0;
