@@ -8,29 +8,33 @@ import gr.aueb.dmst.jabuzzz.scene.SceneCreator;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 public class Buzzer {
 	private Team playingTeam;
-	private int interval = 5;
+	private int currentSecond = 5;
+	private final long DELAY = 1000; // in milliseconds
+	private final long PERIOD = 1000; // in milliseconds
 
 	public void buzz(KeyCode keyCode, Team[] displays, Stage primaryStage) {
+		// creating a new Scene
 		SceneCreator answerSceneCreator = new SceneCreator(displays[0], displays[1]);
 		Scene afterBuzzerScene = answerSceneCreator.createAnswerScene();
-		switch (keyCode) {
+		FontWeight fontWeight = FontWeight.BOLD;
+		switch (keyCode) { // inspecting key code
 		case A:
 			playingTeam = new Team(answerSceneCreator.getTeamADisplay().getText());
-			answerSceneCreator.getTeamADisplay().setFont(Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 18));
+			answerSceneCreator.changeFontWeight('A', fontWeight); // sets team A's font weight to bold
 			break;
 		case L:
 			playingTeam = new Team(answerSceneCreator.getTeamBDisplay().getText());
-			answerSceneCreator.getTeamBDisplay().setFont(Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 18));
+			answerSceneCreator.changeFontWeight('B', fontWeight); // sets team B's font weight to bold
 			break;
 		default:
 			break;
-		} 
+		}
+		// executing timer only if buzzer actually is pressed, A or L
 		if (keyCode.equals(KeyCode.A) || keyCode.equals(KeyCode.L)) {
 			answerSceneCreator.getMessageLabel().setText(playingTeam + " buzzed it!!!");
 			primaryStage.setScene(afterBuzzerScene);
@@ -38,18 +42,16 @@ public class Buzzer {
 			// making a new Timer object for countdown
 			Timer timer = new Timer();
 			// this will start the countdown, changing time left at a fixed rate
-		    timer.scheduleAtFixedRate(new TimerTask() {
-		        public void run() {
-		            if(interval > 0)
-		            {
-		                Platform.runLater(() -> answerSceneCreator.getTimerLabel().setText(Integer.toString(interval)));
-		                //System.out.println(interval);
-		                interval--;
-		            }
-		            else
-		                timer.cancel();
-		        }
-		    }, 1000,1000);
+			timer.scheduleAtFixedRate(new TimerTask() {
+				public void run() {
+					if (currentSecond > 0) {
+						Platform.runLater(
+								() -> answerSceneCreator.getTimerLabel().setText(Integer.toString(currentSecond)));
+						currentSecond--;
+					} else
+						timer.cancel();
+				}
+			}, DELAY, PERIOD);
 		}
 	}
 }
