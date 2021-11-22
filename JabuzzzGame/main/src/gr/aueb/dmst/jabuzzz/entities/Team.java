@@ -1,54 +1,55 @@
 package gr.aueb.dmst.jabuzzz.entities;
 
 /**
- * 
- * @author kostas-rigan
- * @version 1.0
- * @since 17/11/2021
- * 
- * Representation of Team concept
+ * Representation of Team concept.
+ *  @author kostas-rigan
+ *  @version 1.0 17/11/2021
  */
 
 public class Team {
-	private String teamName;
+    /** teamName is the name that describes a created Team. */
+    private String teamName;
 
-	/**
-	 * Class constructor specifying team's name.
-	 * @param teamName team's specified name
-	 */
-	public Team(String teamName) {
-		super();
-		this.teamName = teamName;
-	}
+    /**
+     * Class constructor specifying team's name.
+     *
+     * @param name team's specified name
+     */
+    public Team(final String name) {
+        super();
+        this.teamName = name;
+    }
 
-	/**
-	 * Class constructor with default value.
-	 */
-	public Team() {
-		this.teamName = "";
-	}
+    /**
+     * Class constructor with default value.
+     */
+    public Team() {
+        this.teamName = "";
+    }
 
-	/**
-	 * 
-	 * @return team's current name
-	 */
-	public String getTeamName() {
-		return teamName;
-	}
+    /**
+     *
+     * @return team's current name
+     */
+    public String getTeamName() {
+        return teamName;
+    }
 
-	/**
-	 * specifies new team name
-	 * @param teamName team's specified name
-	 */
-	public void setTeamName(String teamName) {
-		this.teamName = teamName;
-	}
+    /**
+     * Specifies new team name.
+     *
+     * @param name team's specified name
+     */
+    public void setTeamName(final String name) {
+        this.teamName = name;
+    }
 
-	/**
-	 * returns String representation of Team object
-	 */
-	@Override
-	public String toString() {
-		return this.getTeamName();
-	}
+    /**
+     * Represents a Team object by returning its name.
+     * @return name that defines a team
+     */
+    @Override
+    public String toString() {
+        return this.getTeamName();
+    }
 }
