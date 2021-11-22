@@ -7,7 +7,10 @@ import gr.aueb.dmst.jabuzzz.entities.Team;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -17,17 +20,44 @@ import utilities.BuzzerController;
 public class GameSetUpController {
 	
 	@FXML
+	private TextField teamAField;
+	
+	@FXML
+	private TextField teamBField;
+	
+	@FXML
+    private CheckBox mythology;
+
+    @FXML
+    private CheckBox geography;
+
+    @FXML
+    private CheckBox history;
+
+    @FXML
+    private Slider pointsToFinish;
+
+	
+	@FXML
 	private void goBack() throws IOException {
 		
 		Main.showMainMenu();
 		
 	}
 	
+	
 	@FXML
 	private void start() {
 		
-		Team teamA = new Team("Sakis Rouvas");
-		Team teamB = new Team("Elena Paparizou");
+		String nameA = teamAField.getText();
+		String nameB = teamBField.getText();
+		
+		/* boolean myth = mythology.isSelected();
+		boolean geo = geography.isSelected();
+		boolean hist = history.isSelected(); */
+		
+		Team teamA = new Team(nameA);
+		Team teamB = new Team(nameB);
 		/* instantiation of 2 Label objects
 		 * calling a method to set the font family
 		 * and font size
