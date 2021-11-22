@@ -8,6 +8,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import gr.aueb.dmst.jabuzzz.entities.Team;
+import gr.aueb.dmst.jabuzzz.scene.SceneCreator;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -22,35 +23,36 @@ public class BuzzerController {
 	private Team playingTeam;
 	private int interval = 5;
 
-	public void buzz(KeyCode keyCode, String[] displays, Stage primaryStage) {
+	public void buzz(KeyCode keyCode, Team[] displays, Stage primaryStage) {
 		// setting up a new scene
-		Label teamADisplay = new Label(displays[0]);
+		/*Label teamADisplay = new Label(displays[0].getTeamName());
 		teamADisplay.setFont(Font.font(Font.getDefault().getFamily(), 18));
-		Label teamBDisplay = new Label(displays[1]);
+		Label teamBDisplay = new Label(displays[1].getTeamName());
 		teamBDisplay.setFont(Font.font(Font.getDefault().getFamily(), 18));
 		HBox hBox = new HBox(100, teamADisplay, teamBDisplay);
 		Label messageLabel = new Label("");
 		Label timerLabel = new Label(Integer.toString(interval));
-		VBox vBox = new VBox(150, hBox, messageLabel, timerLabel);
-		Scene afterBuzzerScene = new Scene(vBox, 400, 400);
+		VBox vBox = new VBox(150, hBox, messageLabel, timerLabel); */
+		SceneCreator answerSceneCreator = new SceneCreator(displays[0], displays[1]);
+		Scene afterBuzzerScene = answerSceneCreator.createAnswerScene();
 		// using try catch to handle NullPointerException
 		try {
 			// using switch to determine who will prevail!!
 			switch (keyCode) {
 			case A:
-				playingTeam = new Team(teamADisplay.getText());
-				teamADisplay.setFont(Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 18));
+				playingTeam = new Team(answerSceneCreator.getTeamADisplay().getText());
+				answerSceneCreator.getTeamADisplay().setFont(Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 18));
 				break;
 			case L:
-				playingTeam = new Team(teamBDisplay.getText());
-				teamBDisplay.setFont(Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 18));
+				playingTeam = new Team(answerSceneCreator.getTeamBDisplay().getText());
+				answerSceneCreator.getTeamBDisplay().setFont(Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 18));
 				break;
 			default:
 				break;
 			} 
 			// checking if either A or L was pressed to proceed with the scene change
 			if (keyCode.equals(KeyCode.A) || keyCode.equals(KeyCode.L)) {
-				messageLabel.setText(playingTeam + " buzzed it!!!");
+				answerSceneCreator.getMessageLabel().setText(playingTeam + " buzzed it!!!");
 				primaryStage.setScene(afterBuzzerScene);
 				primaryStage.show();
 				// making a new Timer object for countdown
@@ -60,7 +62,7 @@ public class BuzzerController {
 			        public void run() {
 			            if(interval > 0)
 			            {
-			                Platform.runLater(() -> timerLabel.setText(Integer.toString(interval)));
+			                Platform.runLater(() -> answerSceneCreator.getTimerLabel().setText(Integer.toString(interval)));
 			                //System.out.println(interval);
 			                interval--;
 			            }
@@ -72,8 +74,8 @@ public class BuzzerController {
 		} catch (NullPointerException e) {
 			// TODO: handle exception
 			System.out.println("At least one of them is null");
-			System.out.println("teamADisplay: " + teamADisplay);
-			System.out.println("teamBDisplay: " + teamBDisplay);
+			System.out.println("teamADisplay: " + answerSceneCreator.getTeamADisplay());
+			System.out.println("teamBDisplay: " + answerSceneCreator.getTeamBDisplay());
 		}
 
 	}

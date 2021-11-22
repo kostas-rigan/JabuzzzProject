@@ -3,6 +3,8 @@ package gr.aueb.dmst.jabuzzz.game.view;
 import java.io.IOException;
 
 import gr.aueb.dmst.jabuzzz.game.Main;
+import gr.aueb.dmst.jabuzzz.scene.SceneCreator;
+import gr.aueb.dmst.jabuzzz.utilities.Buzzer;
 import gr.aueb.dmst.jabuzzz.entities.Team;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,7 +17,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import utilities.BuzzerController;
 
 public class GameSetUpController {
 	
@@ -48,7 +49,7 @@ public class GameSetUpController {
 	
 	@FXML
 	private void start() {
-		
+	
 		String nameA = teamAField.getText();
 		String nameB = teamBField.getText();
 		
@@ -74,18 +75,20 @@ public class GameSetUpController {
 		 * the HBox we created and the other label
 		 */
 		VBox vBox = new VBox(150, hBox, messageLabel);
-		// an instance of our buzzer 
-		BuzzerController buzzer = new BuzzerController();
-		// setting up the scene with the VBox
-		Scene buzzerScene = new Scene(vBox, 400, 400);
-		//Scene buzzerScene = new Scene(root, 400, 400);
+
+	
+		SceneCreator questionSceneCreator = new SceneCreator(teamA, teamB);
+
+		Buzzer buzzer = new Buzzer();
+		// setting up the scene using SceneCreator's method
+		Scene buzzerScene = questionSceneCreator.createQuestionScene(); 
 		// this method will handle the key presses in buzzerScenes
 		buzzerScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
 			@Override
 			public void handle(KeyEvent event) {
 				// call of the actual buzz method in our buzzer
-				String[] displays = {teamADisplay.getText(), teamBDisplay.getText()};
+				Team[] displays = {teamA, teamB};
 				buzzer.buzz(event.getCode(), displays, Main.primaryStage);
 				
 			}

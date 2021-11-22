@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"gr.aueb.dmst.jabuzzz.entities","l":"Team"}];updateSearchResults();
