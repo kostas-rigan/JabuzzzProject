@@ -1,11 +1,7 @@
 package gr.aueb.dmst.jabuzzz.utilities;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import gr.aueb.dmst.jabuzzz.entities.Team;
 import gr.aueb.dmst.jabuzzz.scene.SceneCreator;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.FontWeight;
@@ -27,29 +23,6 @@ public class Buzzer {
      *  playingTeam is the Team that pressed the buzzer first to
      *  answer the question. */
     private Team playingTeam;
-    /**
-     *  STARTING_SECOND is the initial value of currentSecond field,
-     *  which is the 5th second.
-     */
-    private static final int STARTING_SECOND = 5;
-    /**
-     *  currentSecond is time(in seconds) that is left in timer.
-     *  Used after buzzer is pressed, to track the time the playing team
-     *  has to answer the question.
-     */
-    private int currentSecond = STARTING_SECOND;
-    /**
-     *  DELAY is time(in milliseconds) that timer has to wait
-     *  until it commences its action.
-     */
-    private static final long DELAY = 1000; // in milliseconds
-    /**
-     * PERIOD is time(in milliseconds) timer has to wait
-     * to continue its actions.
-     * 1000 milliseconds = 1 second.
-     */
-    private static final long PERIOD = 1000; // in milliseconds
-
     /**
      * Checks which one of the teams is going to answer the question.
      * <p>
@@ -94,22 +67,8 @@ public class Buzzer {
             primaryStage.show();
             // making a new Timer object for countdown
             Timer timer = new Timer();
-            /* this will start the countdown,
-             *  changing time left at a fixed rate
-             */
-            timer.scheduleAtFixedRate(new TimerTask() {
-                public void run() {
-                    if (currentSecond > 0) {
-                        Platform.runLater(
-                                () -> answerSceneCreator
-                                .getTimerLabel()
-                                .setText(Integer.toString(currentSecond)));
-                        currentSecond--;
-                    } else {
-                        timer.cancel();
-                    }
-                }
-            }, DELAY, PERIOD);
+            // starting count down
+            timer.startTimer(answerSceneCreator);
         }
     }
 }
