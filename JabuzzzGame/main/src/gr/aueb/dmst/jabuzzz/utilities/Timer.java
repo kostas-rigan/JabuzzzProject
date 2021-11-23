@@ -4,6 +4,8 @@ import javafx.application.Platform;
 
 import java.util.TimerTask;
 
+import gr.aueb.dmst.jabuzzz.scene.SceneCreator;
+
 public class Timer {
     /**
      *  STARTING_SECOND is the initial value of currentSecond field,
@@ -28,7 +30,7 @@ public class Timer {
      */
     private static final long PERIOD = 1000; // in milliseconds
 
-    public void startTimer() {
+    public void startTimer(SceneCreator answerSceneCreator) {
         // making a new Timer object for countdown
         java.util.Timer timer = new java.util.Timer();
         /* this will start the countdown,
@@ -37,6 +39,10 @@ public class Timer {
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 if (currentSecond > 0) {
+                    Platform.runLater(
+                            () -> answerSceneCreator
+                            .getTimerLabel()
+                            .setText(Integer.toString(currentSecond)));
                     currentSecond--;
                 } else {
                     timer.cancel();
