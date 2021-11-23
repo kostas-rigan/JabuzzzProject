@@ -25,9 +25,4 @@ public class Question {
 		Collections.shuffle(intList);
 		System.out.println(Arrays.toString(duplicateAnswers));
 	}
-	public static void main(String[] args) {
-		String[] onoma = {"kos","kostaddd","kostadis","giannis"," "};
-		Question q = new Question("pos me lene",onoma);
-		q.showAnswer(4);
-	}
 }
