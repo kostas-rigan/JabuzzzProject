@@ -1,31 +1,68 @@
 package gr.aueb.dmst.jabuzzz.entities;
+/**
+ * Class Category is responsible for which categories the player will play.
+ * @author Konstantinos_Terlakis
+ * @version 1.0 25/11/2021
+ */
 public class Category {
-	boolean mythologia;
-	boolean geografia;
-	boolean istoria;
-	
+	/*
+	 * mythology displays whether the player has selected this category or not.
+	 */
+	private boolean mythology;
+	/*
+	 * geography displays whether the player has selected this category or not.
+	 */
+	private boolean geography;
+	/*
+	 * history displays whether the player has selected this category or not.
+	 */
+	private boolean history;
+	/*
+	 * Class constructor with default values.
+	 */
 	public Category() {
-		mythologia = false;
-		geografia = false;
-		istoria = false;
+		mythology = false;
+		geography = false;
+		history = false;
 	}
-	public void setGeografia(boolean geografia) {
-		this.geografia = geografia;
+    /**
+     * Specifies new geography value.
+     * @param new value for geography.
+     */
+	public void setGeography(boolean geography) {
+		this.geography = geography;
 	}
-	public void setIstoria(boolean istoria) {
-		this.istoria = istoria;
+    /**
+     * Specifies new history value.
+     * @param new value for history.
+     */
+	public void setHistory(boolean history) {
+		this.history = history;
 	}
-	public void setMythologia(boolean mythologia) {
-		this.mythologia = mythologia;
+    /**
+     * Specifies new mythology value.
+     * @param new value for mythology.
+     */
+	public void setMythology(boolean mythology) {
+		this.mythology = mythology;
 	}
-	public boolean getGeografia() {
-		return geografia;
+    /**
+    * @return geography current value.
+    */
+	public boolean getGeography() {
+		return geography;
 	}
-	public boolean getMythologia() {
-		return mythologia;
+    /**
+    * @return history current value.
+    */
+	public boolean getMythology() {
+		return mythology;
 	}
-	public boolean getIstoria() {
-		return istoria;
+    /**
+    * @return history current value.
+    */
+	public boolean getHistory() {
+		return history;
 	}
 	
 
