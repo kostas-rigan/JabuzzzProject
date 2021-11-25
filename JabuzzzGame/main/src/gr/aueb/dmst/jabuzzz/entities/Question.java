@@ -3,7 +3,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 public class Question {
-//Random r = new Random();
 	private String question;
 	private String correctAnswer;
 	private String[] answer = new String[5];
