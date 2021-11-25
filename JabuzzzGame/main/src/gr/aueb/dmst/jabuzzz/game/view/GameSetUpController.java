@@ -1,6 +1,8 @@
 package gr.aueb.dmst.jabuzzz.game.view;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import gr.aueb.dmst.jabuzzz.game.Main;
 import gr.aueb.dmst.jabuzzz.scene.SceneCreator;
@@ -8,8 +10,10 @@ import gr.aueb.dmst.jabuzzz.utilities.Buzzer;
 import gr.aueb.dmst.jabuzzz.entities.Team;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -18,7 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-public class GameSetUpController {
+public class GameSetUpController implements Initializable {
 	
 	@FXML
 	private TextField teamAField;
@@ -37,25 +41,30 @@ public class GameSetUpController {
 
     @FXML
     private Slider pointsToFinish;
-
-	
+    
+    @FXML
+    private ChoiceBox<String> difficulty;
+  
+    
 	@FXML
 	private void goBack() throws IOException {
-		
 		Main.showMainMenu();
-		
 	}
 	
 	
 	@FXML
 	private void start() {
 	
+		//here we get all the values that the players give when they set up the game
 		String nameA = teamAField.getText();
 		String nameB = teamBField.getText();
-		
+		int goal = (int) pointsToFinish.getValue();
 		boolean myth = mythology.isSelected();
 		boolean geo = geography.isSelected();
 		boolean hist = history.isSelected();
+		String difLevel = difficulty.getValue();
+		//end of imported data
+		
 		
 		Team teamA = new Team(nameA);
 		Team teamB = new Team(nameB);
@@ -95,6 +104,15 @@ public class GameSetUpController {
 		});
 		Main.primaryStage.setScene(buzzerScene);
 		Main.primaryStage.show();
+	}
+	
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		difficulty.getItems().addAll("Εύκολο", "Κανονικό", "Δύσκολο");
+		difficulty.setValue("Κανονικό");
+		teamAField.setText("Ομάδα Α");
+		teamBField.setText("Ομάδα Β");
+		
 	}
 }
 

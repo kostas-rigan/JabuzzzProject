@@ -5,11 +5,13 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="673.0" prefWidth="985.0" style="-fx-background-color: #ebf7fc;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gr.aueb.dmst.jabuzzz.game.view.GameSetUpController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="673.0" prefWidth="985.0" style="-fx-background-color: #e1eef9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gr.aueb.dmst.jabuzzz.game.view.GameSetUpController">
    <children>
       <TextField fx:id="teamAField" layoutX="273.0" layoutY="115.0" promptText="ΟμάδαΑ" />
       <TextField fx:id="teamBField" layoutX="273.0" layoutY="164.0" promptText="ΟμάδαΒ" />
@@ -43,26 +45,31 @@
             <Font size="20.0" />
          </font>
       </CheckBox>
-      <ChoiceBox layoutX="310.0" layoutY="361.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="difficulty" layoutX="310.0" layoutY="361.0" prefWidth="150.0" />
       <Text layoutX="53.0" layoutY="383.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Επίπεδο Δυσκολίας:" wrappingWidth="228.24558132886887">
          <font>
             <Font size="25.0" />
          </font>
       </Text>
-      <Slider fx:id="pointsToFinish" layoutX="46.0" layoutY="481.0" prefHeight="18.0" prefWidth="411.0" />
+      <Slider fx:id="pointsToFinish" blockIncrement="5.0" layoutX="46.0" layoutY="481.0" majorTickUnit="5.0" max="20.0" min="5.0" minorTickCount="0" prefHeight="18.0" prefWidth="411.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
       <Text layoutX="53.0" layoutY="462.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Πόντοι τερματισμού:" wrappingWidth="258.24558132886887">
          <font>
             <Font size="25.0" />
          </font>
       </Text>
-      <Button alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" layoutX="441.0" layoutY="573.0" mnemonicParsing="false" onAction="#start" style="-fx-background-color: #f79191;" text="Πάμε!">
+      <Button alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" layoutX="441.0" layoutY="573.0" mnemonicParsing="false" onAction="#start" style="-fx-background-color: #c95d6a;" text="Πάμε!">
          <font>
             <Font name="Comic Sans MS Bold" size="30.0" />
          </font>
       </Button>
-      <Button layoutX="21.0" layoutY="46.0" mnemonicParsing="false" onAction="#goBack" style="-fx-background-color: #f79191;" text="Πίσω στο μενού">
+      <Button layoutX="21.0" layoutY="46.0" mnemonicParsing="false" onAction="#goBack" style="-fx-background-color: #c95d6a;" text="Πίσω στο μενού">
          <font>
             <Font name="Comic Sans MS" size="15.0" />
          </font></Button>
+      <ImageView fitHeight="303.0" fitWidth="284.0" layoutX="545.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../photos/GameIcon.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
