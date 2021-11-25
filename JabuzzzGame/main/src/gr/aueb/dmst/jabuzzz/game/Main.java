@@ -18,7 +18,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws IOException {
 		Main.primaryStage = primaryStage;
 		Main.primaryStage.setTitle("SKABUZZZ");
-		Image ico = new Image("/photos/Icon.png");
+		Image ico = new Image("/photos/GameIcon.png");
 		Main.primaryStage.getIcons().add(ico);
 		showMainMenu();
 	}
