@@ -53,9 +53,9 @@ public class GameSetUpController {
 		String nameA = teamAField.getText();
 		String nameB = teamBField.getText();
 		
-		/* boolean myth = mythology.isSelected();
+		boolean myth = mythology.isSelected();
 		boolean geo = geography.isSelected();
-		boolean hist = history.isSelected(); */
+		boolean hist = history.isSelected();
 		
 		Team teamA = new Team(nameA);
 		Team teamB = new Team(nameB);

@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="673.0" prefWidth="985.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gr.aueb.dmst.jabuzzz.game.view.GameSetUpController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="673.0" prefWidth="985.0" style="-fx-background-color: #ebf7fc;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gr.aueb.dmst.jabuzzz.game.view.GameSetUpController">
    <children>
       <TextField fx:id="teamAField" layoutX="273.0" layoutY="115.0" promptText="ΟμάδαΑ" />
       <TextField fx:id="teamBField" layoutX="273.0" layoutY="164.0" promptText="ΟμάδαΒ" />
@@ -55,11 +55,14 @@
             <Font size="25.0" />
          </font>
       </Text>
-      <Button layoutX="441.0" layoutY="573.0" mnemonicParsing="false" onAction="#start" text="Πάμε!">
+      <Button alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" layoutX="441.0" layoutY="573.0" mnemonicParsing="false" onAction="#start" style="-fx-background-color: #f79191;" text="Πάμε!">
          <font>
-            <Font size="25.0" />
+            <Font name="Comic Sans MS Bold" size="30.0" />
          </font>
       </Button>
-      <Button layoutX="21.0" layoutY="46.0" mnemonicParsing="false" onAction="#goBack" text="Πίσω στο μενού" />
+      <Button layoutX="21.0" layoutY="46.0" mnemonicParsing="false" onAction="#goBack" style="-fx-background-color: #f79191;" text="Πίσω στο μενού">
+         <font>
+            <Font name="Comic Sans MS" size="15.0" />
+         </font></Button>
    </children>
 </AnchorPane>
