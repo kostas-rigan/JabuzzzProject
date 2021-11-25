@@ -11,8 +11,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="673.0" prefWidth="985.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gr.aueb.dmst.jabuzzz.game.view.GameSetUpController">
    <children>
-      <TextField layoutX="273.0" layoutY="115.0" promptText="ΟμάδαΑ" />
-      <TextField layoutX="273.0" layoutY="164.0" promptText="ΟμάδαΒ" />
+      <TextField fx:id="teamAField" layoutX="273.0" layoutY="115.0" promptText="ΟμάδαΑ" />
+      <TextField fx:id="teamBField" layoutX="273.0" layoutY="164.0" promptText="ΟμάδαΒ" />
       <Text layoutX="53.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Όνομα ομάδας Α:">
          <font>
             <Font size="25.0" />
@@ -23,7 +23,7 @@
             <Font size="25.0" />
          </font>
       </Text>
-      <CheckBox layoutX="79.0" layoutY="283.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="145.0" text="Μυθολογία">
+      <CheckBox fx:id="mythology" layoutX="79.0" layoutY="283.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="145.0" text="Μυθολογία">
          <font>
             <Font size="20.0" />
          </font>
@@ -33,12 +33,12 @@
             <Font size="25.0" />
          </font>
       </Text>
-      <CheckBox layoutX="273.0" layoutY="283.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="145.0" text="Γεωγραφία">
+      <CheckBox fx:id="geography" layoutX="273.0" layoutY="283.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="145.0" text="Γεωγραφία">
          <font>
             <Font size="20.0" />
          </font>
       </CheckBox>
-      <CheckBox layoutX="460.0" layoutY="283.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="145.0" text="Ιστορία">
+      <CheckBox fx:id="history" layoutX="460.0" layoutY="283.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="145.0" text="Ιστορία">
          <font>
             <Font size="20.0" />
          </font>
@@ -49,7 +49,7 @@
             <Font size="25.0" />
          </font>
       </Text>
-      <Slider layoutX="46.0" layoutY="481.0" prefHeight="18.0" prefWidth="411.0" />
+      <Slider fx:id="pointsToFinish" layoutX="46.0" layoutY="481.0" prefHeight="18.0" prefWidth="411.0" />
       <Text layoutX="53.0" layoutY="462.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Πόντοι τερματισμού:" wrappingWidth="258.24558132886887">
          <font>
             <Font size="25.0" />

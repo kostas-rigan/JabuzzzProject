@@ -9,9 +9,35 @@ import gr.aueb.dmst.jabuzzz.entities.Team;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 public class GameSetUpController {
+	
+	@FXML
+	private TextField teamAField;
+	
+	@FXML
+	private TextField teamBField;
+	
+	@FXML
+    private CheckBox mythology;
+
+    @FXML
+    private CheckBox geography;
+
+    @FXML
+    private CheckBox history;
+
+    @FXML
+    private Slider pointsToFinish;
+
 	
 	@FXML
 	private void goBack() throws IOException {
@@ -20,14 +46,39 @@ public class GameSetUpController {
 		
 	}
 	
+	
 	@FXML
 	private void start() {
+	
+		String nameA = teamAField.getText();
+		String nameB = teamBField.getText();
 		
-		Team teamA = new Team("Sakis Rouvas");
-		Team teamB = new Team("Elena Paparizou");
+		/* boolean myth = mythology.isSelected();
+		boolean geo = geography.isSelected();
+		boolean hist = history.isSelected(); */
+		
+		Team teamA = new Team(nameA);
+		Team teamB = new Team(nameB);
+		/* instantiation of 2 Label objects
+		 * calling a method to set the font family
+		 * and font size
+		 */
+		Label teamADisplay = new Label(teamA.toString());
+		teamADisplay.setFont(Font.font(Font.getDefault().getFamily(), 18));
+		Label teamBDisplay = new Label(teamB.toString());
+		teamBDisplay.setFont(Font.font(Font.getDefault().getFamily(), 18));
+		// instantiation of an HBox(Horizontal Box) objects
+		HBox hBox = new HBox(100, teamADisplay, teamBDisplay);
+		// another Label object
+		Label messageLabel = new Label("Who will buzz it?");
+		/* instantiation of a VBox(Vertical Box) which will have
+		 * the HBox we created and the other label
+		 */
+		VBox vBox = new VBox(150, hBox, messageLabel);
+
+	
 		SceneCreator questionSceneCreator = new SceneCreator(teamA, teamB);
-		
-		// an instance of our buzzer 
+
 		Buzzer buzzer = new Buzzer();
 		// setting up the scene using SceneCreator's method
 		Scene buzzerScene = questionSceneCreator.createQuestionScene(); 
