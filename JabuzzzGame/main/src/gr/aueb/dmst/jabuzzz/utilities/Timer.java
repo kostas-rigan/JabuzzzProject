@@ -5,7 +5,13 @@ import javafx.application.Platform;
 import java.util.TimerTask;
 
 import gr.aueb.dmst.jabuzzz.scene.SceneCreator;
-
+/**
+ * Timer class(different from java.lang.Timer) is used
+ * to function the timer utility used from the buzz method of
+ * a Buzzer object.
+ * @author NicholasKarakostas
+ *
+ */
 public class Timer {
     /**
      *  STARTING_SECOND is the initial value of currentSecond field,
@@ -30,7 +36,12 @@ public class Timer {
      */
     private static final long PERIOD = 1000; // in milliseconds
 
-    public void startTimer(SceneCreator answerSceneCreator) {
+    /**
+     * This method initiates the timer used in buzz method of
+     * Buzzer class.
+     * @param answerSceneCreator scene used where Timer starts.
+     */
+    public void startTimer(final SceneCreator answerSceneCreator) {
         // making a new Timer object for countdown
         java.util.Timer timer = new java.util.Timer();
         /* this will start the countdown,
