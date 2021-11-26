@@ -24,6 +24,14 @@ import javafx.scene.text.Font;
 
 public class GameSetUpController implements Initializable {
 	
+	private String diffLevel;
+	static String nameA;
+	static String nameB;
+	static int goal;
+	static boolean myth;
+	static boolean geo;
+	static boolean hist;
+	
 	@FXML
 	private TextField teamAField;
 	
@@ -44,6 +52,20 @@ public class GameSetUpController implements Initializable {
     
     @FXML
     private ChoiceBox<String> difficulty;
+    
+    @FXML
+    public void start() throws IOException {
+    	nameA = teamAField.getText();
+    	nameB = teamBField.getText();
+    	goal = (int) pointsToFinish.getValue();
+    	myth = mythology.isSelected();
+    	geo = geography.isSelected();
+    	hist = history.isSelected();
+    	diffLevel = difficulty.getValue();
+    	
+    	
+    	LetsGo();
+    }
   
     
 	@FXML
@@ -52,67 +74,16 @@ public class GameSetUpController implements Initializable {
 	}
 	
 	
-	@FXML
-	private void start() {
-	
-		//here we get all the values that the players give when they set up the game
-		String nameA = teamAField.getText();
-		String nameB = teamBField.getText();
-		int goal = (int) pointsToFinish.getValue();
-		boolean myth = mythology.isSelected();
-		boolean geo = geography.isSelected();
-		boolean hist = history.isSelected();
-		String difLevel = difficulty.getValue();
-		//end of imported data
-		
-		
-		Team teamA = new Team(nameA);
-		Team teamB = new Team(nameB);
-		/* instantiation of 2 Label objects
-		 * calling a method to set the font family
-		 * and font size
-		 */
-		Label teamADisplay = new Label(teamA.toString());
-		teamADisplay.setFont(Font.font(Font.getDefault().getFamily(), 18));
-		Label teamBDisplay = new Label(teamB.toString());
-		teamBDisplay.setFont(Font.font(Font.getDefault().getFamily(), 18));
-		// instantiation of an HBox(Horizontal Box) objects
-		HBox hBox = new HBox(100, teamADisplay, teamBDisplay);
-		// another Label object
-		Label messageLabel = new Label("Who will buzz it?");
-		/* instantiation of a VBox(Vertical Box) which will have
-		 * the HBox we created and the other label
-		 */
-		VBox vBox = new VBox(150, hBox, messageLabel);
-
-	
-		SceneCreator questionSceneCreator = new SceneCreator(teamA, teamB);
-
-		Buzzer buzzer = new Buzzer();
-		// setting up the scene using SceneCreator's method
-		Scene buzzerScene = questionSceneCreator.createQuestionScene(); 
-		// this method will handle the key presses in buzzerScenes
-		buzzerScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-
-			@Override
-			public void handle(KeyEvent event) {
-				// call of the actual buzz method in our buzzer
-				Team[] displays = {teamA, teamB};
-				buzzer.buzz(event.getCode(), displays, Main.primaryStage);
-				
-			}
-		});
-		Main.primaryStage.setScene(buzzerScene);
-		Main.primaryStage.show();
+	private void LetsGo() throws IOException {
+		Main.showMainView();
 	}
-	
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		difficulty.getItems().addAll("Εύκολο", "Κανονικό", "Δύσκολο");
 		difficulty.setValue("Κανονικό");
 		teamAField.setText("Ομάδα Α");
 		teamBField.setText("Ομάδα Β");
-		
 	}
 }
 

@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 
@@ -21,6 +22,15 @@ public class Main extends Application {
 		Image ico = new Image("/photos/GameIcon.png");
 		Main.primaryStage.getIcons().add(ico);
 		showMainMenu();
+	}
+	
+	public static void showMainView() throws IOException {
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(Main.class.getResource("view/MainView.fxml"));
+		BorderPane bp = loader.load();
+		Scene scene = new Scene (bp);
+		primaryStage.setScene(scene);
+		primaryStage.show();
 	}
 	
 	public static void showGameSetUp() throws IOException {
