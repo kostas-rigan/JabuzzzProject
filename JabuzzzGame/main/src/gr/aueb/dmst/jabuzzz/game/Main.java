@@ -2,13 +2,16 @@ package gr.aueb.dmst.jabuzzz.game;
 
 import java.io.IOException;
 
+import gr.aueb.dmst.jabuzzz.game.view.MainViewController;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 
 public class Main extends Application {
 	
@@ -29,6 +32,14 @@ public class Main extends Application {
 		loader.setLocation(Main.class.getResource("view/MainView.fxml"));
 		BorderPane bp = loader.load();
 		Scene scene = new Scene (bp);
+		MainViewController mainViewController = new MainViewController();
+		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+            @Override
+            public void handle(KeyEvent event) {
+                mainViewController.handleBuzzer(event.getCode());
+            }
+        });
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}

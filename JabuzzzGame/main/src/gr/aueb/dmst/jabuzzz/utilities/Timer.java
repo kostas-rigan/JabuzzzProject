@@ -1,6 +1,7 @@
 package gr.aueb.dmst.jabuzzz.utilities;
 
 import javafx.application.Platform;
+import javafx.scene.control.Label;
 
 import java.util.TimerTask;
 
@@ -41,7 +42,7 @@ public class Timer {
      * Buzzer class.
      * @param answerSceneCreator scene used where Timer starts.
      */
-    public void startTimer(final SceneCreator answerSceneCreator) {
+    public void startTimer(final Label timeLabel) {
         // making a new Timer object for countdown
         java.util.Timer timer = new java.util.Timer();
         /* this will start the countdown,
@@ -51,8 +52,7 @@ public class Timer {
             public void run() {
                 if (currentSecond > 0) {
                     Platform.runLater(
-                            () -> answerSceneCreator
-                            .getTimerLabel()
+                            () -> timeLabel
                             .setText(Integer.toString(currentSecond)));
                     currentSecond--;
                 } else {

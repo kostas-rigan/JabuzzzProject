@@ -3,7 +3,9 @@ package gr.aueb.dmst.jabuzzz.utilities;
 import gr.aueb.dmst.jabuzzz.entities.Team;
 import gr.aueb.dmst.jabuzzz.scene.SceneCreator;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
+import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
@@ -21,8 +23,8 @@ import javafx.stage.Stage;
 public class Buzzer {
     /**
      *  playingTeam is the Team that pressed the buzzer first to
-     *  answer the question. */
-    private Team playingTeam;
+     *  answer the question. 
+    private Team playingTeam; */
     /**
      * Checks which one of the teams is going to answer the question.
      * <p>
@@ -35,40 +37,26 @@ public class Buzzer {
      * @param primaryStage
      */
     public void buzz(final KeyCode keyCode,
-        final Team[] displays, final Stage primaryStage) {
-        // creating a new Scene
-        SceneCreator answerSceneCreator
-            = new SceneCreator(displays[0], displays[1]);
-        Scene afterBuzzerScene = answerSceneCreator.createAnswerScene();
+        final Label[] displays) {
+        Timer timer = new Timer();
         FontWeight fontWeight = FontWeight.BOLD;
         switch (keyCode) { // inspecting key code
         case A:
-            playingTeam
-            = new Team(answerSceneCreator.getTeamADisplay().getText());
-            answerSceneCreator
-            .changeFontWeight('A', fontWeight);
+            /*playingTeam
+            = new Team(teamDisplays[0].getText());*/
+            displays[0].setFont(Font.font(displays[0].getFont().getFamily(), fontWeight, displays[0].getFont().getSize()));
             // sets team A's font weight to bold
+            timer.startTimer(displays[2]);
             break;
         case L:
-            playingTeam =
-            new Team(answerSceneCreator.getTeamBDisplay().getText());
-            answerSceneCreator
-            .changeFontWeight('B', fontWeight);
+            /*playingTeam =
+            new Team(teamDisplays[1].getText()); */
+            displays[1].setFont(Font.font(displays[1].getFont().getFamily(), fontWeight, displays[1].getFont().getSize()));
             // sets team B's font weight to bold
+            timer.startTimer(displays[2]);
             break;
         default:
             break;
-        }
-        // executing timer only if buzzer actually is pressed, A or L
-        if (keyCode.equals(KeyCode.A) || keyCode.equals(KeyCode.L)) {
-            answerSceneCreator.getMessageLabel()
-            .setText(playingTeam + " buzzed it!!!");
-            primaryStage.setScene(afterBuzzerScene);
-            primaryStage.show();
-            // making a new Timer object for countdown
-            Timer timer = new Timer();
-            // starting count down
-            timer.startTimer(answerSceneCreator);
         }
     }
 }
