@@ -40,7 +40,7 @@ public class Timer {
     /**
      * This method initiates the timer used in buzz method of
      * Buzzer class.
-     * @param answerSceneCreator scene used where Timer starts.
+     * @param timeLabel the label that holds how much time is left.
      */
     public void startTimer(final Label timeLabel) {
         // making a new Timer object for countdown
