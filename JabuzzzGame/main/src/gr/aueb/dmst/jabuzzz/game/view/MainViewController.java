@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -22,6 +23,9 @@ public class MainViewController implements Initializable {
 
     @FXML
     private Button exitButton;
+    
+    @FXML
+    private Button buzzerButton;
 
     @FXML
     private Label teamAArea;
@@ -57,28 +61,16 @@ public class MainViewController implements Initializable {
 		teamBArea.setText(teamB.getTeamName());
 		
 		timerLabel.setText(Integer.toString(INITIAL_SECOND));
-		
-		
+		exitButton.setFocusTraversable(false);
+		buzzerButton.setFocusTraversable(true);;
 		
 	}
 
-	public void handleBuzzer(KeyCode keyCode) {
-	   /* Buzzer buzzer = new Buzzer();
+	@FXML
+	public void handleBuzzer(KeyEvent keyEvent) {
+	    Buzzer buzzer = new Buzzer();
 	    Label[] labels = {teamAArea, teamBArea, timerLabel};
-	    buzzer.buzz(keyCode, labels); */
-	    Timer timer = new Timer();
-	    timer.startTimer(timerLabel);
-	    FontWeight fontWeight = FontWeight.BOLD;
-        switch (keyCode) { // inspecting key code
-        case A:
-            teamAArea.setFont(Font.font(teamAArea.getFont().getFamily(), fontWeight, teamAArea.getFont().getSize()));
-            break;
-        case L:
-            teamBArea.setFont(Font.font(teamBArea.getFont().getFamily(), fontWeight, teamBArea.getFont().getSize()));
-            break;
-        default:
-            break;
-        }
+	    buzzer.buzz(keyEvent.getCode(), labels);
 	}
 	
 	@FXML

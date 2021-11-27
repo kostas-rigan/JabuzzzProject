@@ -32,14 +32,14 @@ public class Main extends Application {
 		loader.setLocation(Main.class.getResource("view/MainView.fxml"));
 		BorderPane bp = loader.load();
 		Scene scene = new Scene (bp);
-		MainViewController mainViewController = new MainViewController();
+		/*MainViewController mainViewController = new MainViewController();
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
             @Override
             public void handle(KeyEvent event) {
                 mainViewController.handleBuzzer(event.getCode());
             }
-        });
+        }); */
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}

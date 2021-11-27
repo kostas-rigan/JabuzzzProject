@@ -79,4 +79,7 @@
          </children>
       </HBox>
    </top>
+   <bottom>
+      <Button fx:id="buzzerButton" mnemonicParsing="false" onKeyPressed="#handleBuzzer" text="Buzzer" BorderPane.alignment="CENTER" />
+   </bottom>
 </BorderPane>
