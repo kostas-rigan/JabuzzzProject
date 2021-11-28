@@ -5,22 +5,15 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import gr.aueb.dmst.jabuzzz.game.Main;
-import gr.aueb.dmst.jabuzzz.scene.SceneCreator;
 import gr.aueb.dmst.jabuzzz.utilities.Buzzer;
-import gr.aueb.dmst.jabuzzz.entities.Team;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
+
 
 public class GameSetUpController implements Initializable {
 	

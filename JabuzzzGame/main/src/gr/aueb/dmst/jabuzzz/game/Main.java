@@ -27,6 +27,15 @@ public class Main extends Application {
 		showMainMenu();
 	}
 	
+	public static void showInstructions() throws IOException {
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(Main.class.getResource("view/Instructions.fxml"));
+		mainLayout = loader.load();
+		Scene scene = new Scene (mainLayout);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+	
 	public static void showMainView() throws IOException {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(Main.class.getResource("view/MainView.fxml"));

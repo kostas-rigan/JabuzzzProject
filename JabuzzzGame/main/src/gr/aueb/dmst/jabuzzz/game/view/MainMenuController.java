@@ -14,8 +14,8 @@ public class MainMenuController {
 	}
 	
 	@FXML
-	private void Instructions() {
-		
+	private void Instructions() throws IOException {
+		Main.showInstructions();
 	}
 	
 	@FXML

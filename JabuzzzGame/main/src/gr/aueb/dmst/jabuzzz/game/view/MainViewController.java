@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -37,16 +38,20 @@ public class MainViewController implements Initializable {
     private Label questionArea;
     
     @FXML
-    private Label awnserA;
+    private RadioButton answerA;
 
     @FXML
-    private Label awnserB;
+    private RadioButton answerB;
 
     @FXML
-    private Label awnserC;
+    private RadioButton answerC;
 
     @FXML
-    private Label awnserD;
+    private RadioButton answerD;
+    
+    @FXML
+    private RadioButton answerE;
+    
     
     @FXML
     private Label timerLabel;
