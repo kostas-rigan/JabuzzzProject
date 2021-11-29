@@ -67,6 +67,11 @@ public class MainViewController implements Initializable {
 		
 		timerLabel.setText(Integer.toString(INITIAL_SECOND));
 		exitButton.setFocusTraversable(false);
+		answerA.setFocusTraversable(false);
+		answerB.setFocusTraversable(false);
+		answerC.setFocusTraversable(false);
+		answerD.setFocusTraversable(false);
+		answerE.setFocusTraversable(false);
 		buzzerButton.setFocusTraversable(true);;
 		
 	}
