@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
@@ -21,6 +22,9 @@ import javafx.stage.Stage;
 public class MainViewController implements Initializable {
  
 	private static final int INITIAL_SECOND = 5;
+	
+	@FXML
+	private ToggleGroup Options;
 
     @FXML
     private Button exitButton;
@@ -65,15 +69,18 @@ public class MainViewController implements Initializable {
 		teamAArea.setText(teamA.getTeamName());
 		teamBArea.setText(teamB.getTeamName());
 		
+		answerA.setToggleGroup(Options);
+		answerB.setToggleGroup(Options);
+		answerC.setToggleGroup(Options);
+		answerD.setToggleGroup(Options);
+		answerE.setToggleGroup(Options);
+		
+		
 		timerLabel.setText(Integer.toString(INITIAL_SECOND));
 		exitButton.setFocusTraversable(false);
-		answerA.setFocusTraversable(false);
-		answerB.setFocusTraversable(false);
-		answerC.setFocusTraversable(false);
-		answerD.setFocusTraversable(false);
-		answerE.setFocusTraversable(false);
-		buzzerButton.setFocusTraversable(true);;
+		buzzerButton.setFocusTraversable(true);
 		
+	
 	}
 
 	@FXML

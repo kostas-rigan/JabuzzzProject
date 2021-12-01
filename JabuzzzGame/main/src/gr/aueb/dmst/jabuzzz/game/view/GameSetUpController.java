@@ -17,7 +17,7 @@ import javafx.scene.control.TextField;
 
 public class GameSetUpController implements Initializable {
 	
-	private String diffLevel;
+	static String diffLevel;
 	static String nameA;
 	static String nameB;
 	static int goal;
