@@ -1,6 +1,8 @@
 package gr.aueb.dmst.jabuzzz.entities;
 
 public class DifficultyOfGame {
+    //number of answer
+    public static int numberOfAnswers;
     public enum Difficulty {
         EASY, NORMAL, HARD
     }
@@ -14,15 +16,16 @@ public class DifficultyOfGame {
     public void handleDifficulty() {
         switch (difficulty) {
             case EASY:
-                //do stuff
+                numberOfAnswers = 3;
                 break;
             case NORMAL:
-                //do stuff
+                numberOfAnswers = 4;
                 break;
             case HARD:
-                //do stuff
+                numberOfAnswers = 5;
                 break;
         }
+
 
         }
 }
