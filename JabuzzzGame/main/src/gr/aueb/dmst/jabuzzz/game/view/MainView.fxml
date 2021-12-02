@@ -26,7 +26,7 @@
                   <Insets bottom="25.0" />
                </padding>
             </Label>
-            <RadioButton fx:id="answerA" mnemonicParsing="false" text="Andriani">
+            <RadioButton fx:id="answerA" mnemonicParsing="false" selected="true" text="Andriani">
                <font>
                   <Font name="Comic Sans MS" size="20.0" />
                </font>

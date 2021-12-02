@@ -69,13 +69,6 @@ public class MainViewController implements Initializable {
 		teamAArea.setText(teamA.getTeamName());
 		teamBArea.setText(teamB.getTeamName());
 		
-		answerA.setToggleGroup(Options);
-		answerB.setToggleGroup(Options);
-		answerC.setToggleGroup(Options);
-		answerD.setToggleGroup(Options);
-		answerE.setToggleGroup(Options);
-		
-		
 		timerLabel.setText(Integer.toString(INITIAL_SECOND));
 		exitButton.setFocusTraversable(false);
 		buzzerButton.setFocusTraversable(true);
