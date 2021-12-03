@@ -10,21 +10,20 @@ import main.java.gr.aueb.dmst.jabuzzz.game.Main;
 
 public class InstructionsController {
 
-	    @FXML
-	    private Button play;
+    @FXML
+    private Button play;
 
-	    @FXML
-	    private Button back;
+    @FXML
+    private Button back;
 
-	    @FXML
-	    void GoBack(ActionEvent event) throws IOException {
-	    	Main.showMainMenu();
-	    }
+    @FXML
+    void GoBack(ActionEvent event) throws IOException {
+        Main.showMainMenu();
+    }
 
-	    @FXML
-	    void Play(ActionEvent event) throws IOException {
-	    	Main.showGameSetUp();
-	    }
+    @FXML
+    void Play(ActionEvent event) throws IOException {
+        Main.showGameSetUp();
+    }
 
-	}
-
+}

@@ -1,7 +1,7 @@
 package main.java.gr.aueb.dmst.jabuzzz.utilities;
 
 public class Instructions {
-    public static void showInstructions(){
-        //code to show instructions
+    public static void showInstructions() {
+        // code to show instructions
     }
 }
