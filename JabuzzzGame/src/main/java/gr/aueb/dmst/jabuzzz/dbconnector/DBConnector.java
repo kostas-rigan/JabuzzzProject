@@ -6,18 +6,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Dbconnector {
-
-		private Connection connect() {
+public class DBConnector {
+		private Connection conn;
+		public void connect() {
 			
-			String url = "jdbc:sqlite:src/resources/DATA_BASE.sqlite";
-			Connection conn = null;
+			String url = "jdbc:sqlite:src/main/resources/DATA_BASE.sqlite";
+			
 			try {
 				conn = DriverManager.getConnection(url);
 				System.out.println("connected");
 			}catch (SQLException e){
 				System.out.println(e.getMessage());
 			}
-			return conn;
+			
 		}
 }
