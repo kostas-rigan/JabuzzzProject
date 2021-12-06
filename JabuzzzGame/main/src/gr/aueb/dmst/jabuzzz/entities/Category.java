@@ -6,15 +6,18 @@ package gr.aueb.dmst.jabuzzz.entities;
  */
 public class Category {
 	/*
-	 * mythology displays whether the player has selected this category or not.
+	 *mythology displays whether the player
+	 *has selected this category or not.
 	 */
 	private boolean mythology;
 	/*
-	 * geography displays whether the player has selected this category or not.
+	 * geography displays whether the player 
+	 * has selected this category or not.
 	 */
 	private boolean geography;
 	/*
-	 * history displays whether the player has selected this category or not.
+	 * history displays whether the player 
+	 * has selected this category or not.
 	 */
 	private boolean history;
 	/*
