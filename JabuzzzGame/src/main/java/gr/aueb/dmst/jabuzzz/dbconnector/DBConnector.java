@@ -24,7 +24,7 @@ public class DBConnector {
 	}
 
 	public String[] selectQuestion() {
-		String sql = "SELECT Description, Right_answer, Wrong_answer1, Wrong_answer2, Wrong_answer3, Wrong_answer4 FROM Questions WHERE Question_id=1";
+		String sql = "SELECT Description, Right_answer, Wrong_answer1, Wrong_answer2, Wrong_answer3, Wrong_answer4 FROM Questions WHETR";
 
 		try(
 				Statement stmt = conn.createStatement();
