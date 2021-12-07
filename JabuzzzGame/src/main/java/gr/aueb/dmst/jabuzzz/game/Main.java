@@ -25,8 +25,7 @@ public class Main extends Application {
 		Image ico = new Image("/main/resources/photos/GameIcon.png");
 		Main.primaryStage.getIcons().add(ico);
 		showMainMenu();
-		DBConnector dbconnector = new DBConnector();
-		dbconnector.connect();
+		
 	}
 	
 	/**
