@@ -23,8 +23,8 @@ public class DBConnector {
 
 	}
 
-	public String[] selectQuestion() {
-		String sql = "SELECT Description, Right_answer, Wrong_answer1, Wrong_answer2, Wrong_answer3, Wrong_answer4 FROM Questions WHETR";
+	public String[] selectQuestion(String category, int id) {
+		String sql = String.format("SELECT Description, Right_answer, Wrong_answer1, Wrong_answer2, Wrong_answer3, Wrong_answer4 FROM Questions WHERE category = '%s' and Question_id = %d", category, id);
 
 		try(
 				Statement stmt = conn.createStatement();
@@ -35,12 +35,11 @@ public class DBConnector {
 
 			String[] Question = new String[6];
 			// loop through the result set
-			System.out.println();
 			while (rs.next()) {
 				for (int i = 1; i <= numberOfColumns; i++) {
-					System.out.printf("%-8s\t", rs.getObject(i));
+					Question[i-1]= (String) rs.getObject(i);
 				}
-				System.out.println();
+				
 			}
 			return Question;
 

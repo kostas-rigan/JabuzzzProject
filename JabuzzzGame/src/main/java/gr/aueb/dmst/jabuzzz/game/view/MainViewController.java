@@ -58,7 +58,8 @@ public class MainViewController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1) {
     	DBConnector dbconnector = new DBConnector();
 		dbconnector.connect();
-		String[] Q = dbconnector.selectQuestion();
+		String[] Q = dbconnector.selectQuestion("Geography", 1);
+		String[] Q2 = dbconnector.selectQuestion("History", 32);
     	
         Team teamA = new Team(GameSetUpController.nameA);
         Team teamB = new Team(GameSetUpController.nameB);
