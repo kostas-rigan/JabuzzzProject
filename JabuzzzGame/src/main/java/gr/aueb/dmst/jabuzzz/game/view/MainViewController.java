@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyEvent;
+import main.java.gr.aueb.dmst.jabuzzz.entities.Score;
 import main.java.gr.aueb.dmst.jabuzzz.entities.Team;
 import main.java.gr.aueb.dmst.jabuzzz.utilities.Buzzer;
 
@@ -31,6 +32,12 @@ public class MainViewController implements Initializable {
 
     @FXML
     private Label teamBArea;
+    
+    @FXML
+    private Label scoreAArea;
+
+    @FXML
+    private Label scoreBArea;
 
     @FXML
     private Label questionArea;
@@ -57,10 +64,16 @@ public class MainViewController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1) {
         Team teamA = new Team(GameSetUpController.nameA);
         Team teamB = new Team(GameSetUpController.nameB);
+        
+        Score scoreA = new Score(GameSetUpController.goal);
+        Score scoreB = new Score(GameSetUpController.goal);
 
         teamAArea.setText(teamA.getTeamName());
         teamBArea.setText(teamB.getTeamName());
-
+        
+       scoreAArea.setText(scoreA.toString());
+        scoreBArea.setText(scoreB.toString());
+       
         timerLabel.setText(Integer.toString(INITIAL_SECOND));
 
         changeTraversability();
@@ -94,11 +107,11 @@ public class MainViewController implements Initializable {
         buzzerButton.setFocusTraversable(true);
     }
     
-    public void disableButtons() {
+    private void disableButtons() {
     	changeButtonStatus(true);
     }
     
-    public void enableButtons() {
+    private void enableButtons() {
     	changeButtonStatus(false);
     	
     }
@@ -113,6 +126,11 @@ public class MainViewController implements Initializable {
     
     public void onAnswerGiven() {
     	disableButtons();
+    	//TODO: stopTimer(), checkAnswer(), showCorrectAnswer()
+    }
+    
+    public void timeIsUp() {
+    	
     }
 
 }

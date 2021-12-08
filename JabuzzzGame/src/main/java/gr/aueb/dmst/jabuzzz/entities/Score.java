@@ -69,4 +69,11 @@ public class Score {
     public int getTeamsScore() {
         return teamsScore;
     }
+
+	@Override
+	public String toString() {
+		return "Score:" + teamsScore;
+	}
+    
+    
 }
