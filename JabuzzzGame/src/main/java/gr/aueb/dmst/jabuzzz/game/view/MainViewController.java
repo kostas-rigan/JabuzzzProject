@@ -18,6 +18,8 @@ import main.java.gr.aueb.dmst.jabuzzz.utilities.Buzzer;
 public class MainViewController implements Initializable {
 
     private static final int INITIAL_SECOND = 5;
+    
+    private String correctAnswer;
 
     @FXML
     private ToggleGroup Options;
@@ -132,11 +134,24 @@ public class MainViewController implements Initializable {
     
     public void onAnswerGiven() {
     	disableButtons();
+    	
     	//TODO: stopTimer(), checkAnswer(), showCorrectAnswer()
     }
     
     public void timeIsUp() {
     	
     }
+    
+   /*
+     private void setNewQA() {
+    	question.suffle();
+    	answerA.setText(question.first);
+    	answerB.setText(question.second);
+    	answerC.setText(question.third);
+    	answerD.setText(question.fourth);
+    	answerE.setText(question.fifth);
+    	questionArea.setText(question.question);
+    }
+    */
 
 }
