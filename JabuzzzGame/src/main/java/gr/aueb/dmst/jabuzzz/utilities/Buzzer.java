@@ -17,6 +17,7 @@ import javafx.scene.text.FontWeight;
  */
 
 public class Buzzer {
+    Timer timer;
     /**
      * Checks which one of the teams is going to answer the question.
      * <p>
@@ -29,7 +30,7 @@ public class Buzzer {
      * @param primaryStage
      */
     public void buzz(final KeyCode keyCode, final Label[] displays) {
-        Timer timer = new Timer();
+        timer = new Timer(displays[2]);
         FontWeight fontWeight = FontWeight.BOLD;
         switch (keyCode) { // inspecting key code
         case A:
@@ -39,7 +40,7 @@ public class Buzzer {
             displays[0]
                     .setFont(Font.font(displays[0].getFont().getFamily(), fontWeight, displays[0].getFont().getSize()));
             // sets team A's font weight to bold
-            timer.startTimer(displays[2]);
+            timer.startTimer();
             break;
         case L:
             /*
@@ -48,10 +49,17 @@ public class Buzzer {
             displays[1]
                     .setFont(Font.font(displays[1].getFont().getFamily(), fontWeight, displays[1].getFont().getSize()));
             // sets team B's font weight to bold
-            timer.startTimer(displays[2]);
+            timer.startTimer();
             break;
         default:
             break;
         }
+    }
+    
+    /**
+     * stop method stops timer's count down procedure.
+     */
+    public void stop() {
+        timer.stopTimer();
     }
 }

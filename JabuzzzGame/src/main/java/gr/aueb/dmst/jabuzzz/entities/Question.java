@@ -1,5 +1,6 @@
 package main.java.gr.aueb.dmst.jabuzzz.entities;
 
+import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -133,4 +134,12 @@ public class Question {
 		return answer[questionIndex][answerIndex];
 	}
 
+	/**
+	 * This method returns the correct answer of a specified question.
+	 * @param questionIndex
+	 * @return a String containing the correct answer of a question
+	 */
+	public static String getCorrectAnswer(int questionIndex) {
+	    return correctAnswer[questionIndex];
+	}
 }

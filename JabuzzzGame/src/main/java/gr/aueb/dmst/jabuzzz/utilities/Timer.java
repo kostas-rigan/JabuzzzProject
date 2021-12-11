@@ -13,6 +13,9 @@ import java.util.TimerTask;
  *
  */
 public class Timer {
+    // making a new Timer object for countdown
+    java.util.Timer timer = new java.util.Timer();
+    private Label timerLabel;
     /**
      * STARTING_SECOND is the initial value of currentSecond field, which is the 5th
      * second.
@@ -33,27 +36,36 @@ public class Timer {
      * 1000 milliseconds = 1 second.
      */
     private static final long PERIOD = 1000; // in milliseconds
+    
+    public Timer(Label timerLabel) {
+        this.timerLabel = timerLabel;
+    }
 
     /**
      * This method initiates the timer used in buzz method of Buzzer class.
      * 
      * @param timeLabel the label that holds how much time is left.
      */
-    public void startTimer(final Label timeLabel) {
-        // making a new Timer object for countdown
-        java.util.Timer timer = new java.util.Timer();
+    public void startTimer() {
         /*
          * this will start the countdown, changing time left at a fixed rate
          */
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 if (currentSecond > 0) {
-                    Platform.runLater(() -> timeLabel.setText(Integer.toString(currentSecond)));
+                    Platform.runLater(() -> timerLabel.setText(Integer.toString(currentSecond)));
                     currentSecond--;
                 } else {
                     timer.cancel();
                 }
             }
         }, DELAY, PERIOD);
+    }
+
+    /**
+     * stopTimer method cancels the procedure in startTimer method before the timer ends.
+     */
+    public void stopTimer() {
+        timer.cancel();
     }
 }

@@ -143,7 +143,7 @@
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Region prefHeight="100.0" prefWidth="454.0" />
-            <Button fx:id="buzzerButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onKeyPressed="#handleBuzzer" text="Buzzer">
+            <Button fx:id="buzzerButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onKeyPressed="#handleBuzzer" opacity="0.0" text="Buzzer">
                <HBox.margin>
                   <Insets top="20.0" />
                </HBox.margin>

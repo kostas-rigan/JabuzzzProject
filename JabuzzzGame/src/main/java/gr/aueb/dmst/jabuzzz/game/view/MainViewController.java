@@ -1,6 +1,7 @@
 package main.java.gr.aueb.dmst.jabuzzz.game.view;
 
 import java.net.URL;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -8,8 +9,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Paint;
 import main.java.gr.aueb.dmst.jabuzzz.entities.Question;
 import main.java.gr.aueb.dmst.jabuzzz.entities.Score;
 import main.java.gr.aueb.dmst.jabuzzz.dbconnector.DBConnector;
@@ -19,8 +26,9 @@ import main.java.gr.aueb.dmst.jabuzzz.utilities.Buzzer;
 public class MainViewController implements Initializable {
 
 	private static final int INITIAL_SECOND = 5;
+    private int quest = 0;
+	private Buzzer buzzer = new Buzzer();
 
-	private String correctAnswer;
 
 	@FXML
 	private ToggleGroup Options;
@@ -69,7 +77,7 @@ public class MainViewController implements Initializable {
 		DBConnector dbconnector = new DBConnector();
 		dbconnector.connect();
 		String[] Q = dbconnector.selectQuestion("Geography", 1);
-		String[] Q2 = dbconnector.selectQuestion("History", 32);
+		String[] Q2 = dbconnector.selectQuestion("Geography", 2);
 		Question quest1 = new Question(Q);
 		Question quest2 = new Question(Q2);
 		Question.shuffleQuestion();
@@ -92,12 +100,19 @@ public class MainViewController implements Initializable {
 		disableButtons();
 	}
 
+	/**
+	 * handleBuzzer method initiates when a team presses their respective key.
+	 * It controls the flow of the game regarding to the question answered.
+	 * @param keyEvent the first key pressed by either team.
+	 */
 	@FXML
 	public void handleBuzzer(KeyEvent keyEvent) {
-		Buzzer buzzer = new Buzzer();
-		Label[] labels = { teamAArea, teamBArea, timerLabel };
-		buzzer.buzz(keyEvent.getCode(), labels);
-		enableButtons();
+	    if (keyEvent.getCode() == KeyCode.A || keyEvent.getCode() == KeyCode.L) {
+	        exitButton.requestFocus();
+	        Label[] labels = { teamAArea, teamBArea, timerLabel };
+	        buzzer.buzz(keyEvent.getCode(), labels);
+	        enableButtons();
+        }
 	}
 
 	@FXML
@@ -138,22 +153,54 @@ public class MainViewController implements Initializable {
 
 	public void onAnswerGiven() {
 		disableButtons();
-
-		// TODO: stopTimer(), checkAnswer(), showCorrectAnswer()
+		stopTimer();
+		checkAnswer();
+		showCorrectAnswer();
 	}
 
 	public void timeIsUp() {
 
 	}
 
+	private void checkAnswer() {
+	    RadioButton button = (RadioButton) Options.getSelectedToggle();
+	    String correctAnswer = Question.getCorrectAnswer(quest); 
+	    // TODO: change score in if else statement
+	    if (button.getText().equals(correctAnswer)) {
+	        System.out.println("Correct answer");
+	    } else {
+	        changeBackgroundColor("red", button);
+	        System.out.println("Wrong answer");
+	    }
+	}
+
 	private void setNewQA() {
-		int quest = 0;
 		answerA.setText(Question.getAnswer(quest, 0));
 		answerB.setText(Question.getAnswer(quest, 1));
 		answerC.setText(Question.getAnswer(quest, 2));
 		answerD.setText(Question.getAnswer(quest, 3));
 		answerE.setText(Question.getAnswer(quest, 4));
 		questionArea.setText(Question.getQuestions(quest));
+		quest++;
+	}
+	
+	private void stopTimer() {
+	    buzzer.stop();
 	}
 
+	private void showCorrectAnswer() {
+	    for (Iterator<Toggle> iterator = Options.getToggles().iterator(); iterator.hasNext();) {
+            RadioButton button = (RadioButton) iterator.next();
+            if (button.getText().equals(Question.getCorrectAnswer(quest))) {
+                changeBackgroundColor("green", button);
+            }
+        }
+	}
+	
+	private void changeBackgroundColor(String color, RadioButton button) {
+	    Background background = new Background(
+	            new BackgroundFill(Paint.valueOf(color),
+	            new CornerRadii(0.1, true), null));
+        button.setBackground(background);
+	}
 }
