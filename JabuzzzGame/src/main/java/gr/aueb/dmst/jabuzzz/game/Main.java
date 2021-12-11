@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import main.java.gr.aueb.dmst.jabuzzz.dbconnector.DBConnector;
 import javafx.scene.image.Image;
 
 public class Main extends Application {
@@ -24,6 +25,7 @@ public class Main extends Application {
 		Image ico = new Image("/main/resources/photos/GameIcon.png");
 		Main.primaryStage.getIcons().add(ico);
 		showMainMenu();
+		
 	}
 	
 	/**

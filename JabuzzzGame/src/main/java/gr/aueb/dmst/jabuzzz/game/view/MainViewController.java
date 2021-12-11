@@ -11,6 +11,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyEvent;
 import main.java.gr.aueb.dmst.jabuzzz.entities.Score;
+import main.java.gr.aueb.dmst.jabuzzz.dbconnector.DBConnector;
 import main.java.gr.aueb.dmst.jabuzzz.entities.Team;
 import main.java.gr.aueb.dmst.jabuzzz.utilities.Buzzer;
 
@@ -62,6 +63,11 @@ public class MainViewController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+    	DBConnector dbconnector = new DBConnector();
+		dbconnector.connect();
+		String[] Q = dbconnector.selectQuestion("Geography", 1);
+		String[] Q2 = dbconnector.selectQuestion("History", 32);
+    	
         Team teamA = new Team(GameSetUpController.nameA);
         Team teamB = new Team(GameSetUpController.nameB);
         

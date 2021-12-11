@@ -1,31 +1,39 @@
 package main.java.gr.aueb.dmst.jabuzzz.entities;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.Random;
 
 public class Question {
-    private String question;
-    private String correctAnswer;
-    private String[] answer = new String[5];
+	public String question;
+	private String correctAnswer;
+	private String[] answer = new String[5];
 
-    public Question(String question, String[] answer) {
-        this.question = question;
-        this.answer[0] = answer[0];
-        this.answer[1] = answer[1];
-        this.answer[2] = answer[2];
-        this.answer[3] = answer[3];
-        this.answer[4] = answer[4];
-        correctAnswer = answer[0];
-    }
+	public Question(String question, String[] answer) {
+		this.question = question;
+		this.answer = answer;
+		correctAnswer = answer[0];
+	}
 
-    public void showAnswer(int numberOfAnswers) {
-        String[] duplicateAnswers = new String[numberOfAnswers];
-        for (int i = 0; i < duplicateAnswers.length; i++) {
-            duplicateAnswers[i] = answer[i];
-        }
-        List<String> intList = Arrays.asList(duplicateAnswers);
-        Collections.shuffle(intList);
-        System.out.println(Arrays.toString(duplicateAnswers));
-    }
+	private void shuffleArray() {
+		int index;
+		String temp;
+		Random random = new Random();
+		for (int i = answer.length - 1; i > 0; i--) {
+			index = random.nextInt(i + 1);
+			temp = answer[index];
+			answer[index] = answer[i];
+			answer[i] = temp;
+		}
+		for (int i = 0; i < answer.length; i++) {
+			System.out.println(answer[i]);
+		}
+	}
+
+	public int findAnswer() {
+		for (int i = 0; i < 5; i++) {
+			if (this.answer[i] == correctAnswer) {
+				return i;
+			}
+		}
+		return -1;
+	}
 }
