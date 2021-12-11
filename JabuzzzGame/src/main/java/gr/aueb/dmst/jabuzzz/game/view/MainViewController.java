@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyEvent;
+import main.java.gr.aueb.dmst.jabuzzz.entities.Question;
 import main.java.gr.aueb.dmst.jabuzzz.entities.Score;
 import main.java.gr.aueb.dmst.jabuzzz.dbconnector.DBConnector;
 import main.java.gr.aueb.dmst.jabuzzz.entities.Team;
@@ -17,141 +18,142 @@ import main.java.gr.aueb.dmst.jabuzzz.utilities.Buzzer;
 
 public class MainViewController implements Initializable {
 
-    private static final int INITIAL_SECOND = 5;
-    
-    private String correctAnswer;
+	private static final int INITIAL_SECOND = 5;
 
-    @FXML
-    private ToggleGroup Options;
+	private String correctAnswer;
 
-    @FXML
-    private Button exitButton;
+	@FXML
+	private ToggleGroup Options;
 
-    @FXML
-    private Button buzzerButton;
+	@FXML
+	private Button exitButton;
 
-    @FXML
-    private Label teamAArea;
+	@FXML
+	private Button buzzerButton;
 
-    @FXML
-    private Label teamBArea;
-    
-    @FXML
-    private Label scoreAArea;
+	@FXML
+	private Label teamAArea;
 
-    @FXML
-    private Label scoreBArea;
+	@FXML
+	private Label teamBArea;
 
-    @FXML
-    private Label questionArea;
+	@FXML
+	private Label scoreAArea;
 
-    @FXML
-    private RadioButton answerA;
+	@FXML
+	private Label scoreBArea;
 
-    @FXML
-    private RadioButton answerB;
+	@FXML
+	private Label questionArea;
 
-    @FXML
-    private RadioButton answerC;
+	@FXML
+	private RadioButton answerA;
 
-    @FXML
-    private RadioButton answerD;
+	@FXML
+	private RadioButton answerB;
 
-    @FXML
-    private RadioButton answerE;
+	@FXML
+	private RadioButton answerC;
 
-    @FXML
-    private Label timerLabel;
+	@FXML
+	private RadioButton answerD;
 
-    @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
-    	DBConnector dbconnector = new DBConnector();
+	@FXML
+	private RadioButton answerE;
+
+	@FXML
+	private Label timerLabel;
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		DBConnector dbconnector = new DBConnector();
 		dbconnector.connect();
 		String[] Q = dbconnector.selectQuestion("Geography", 1);
 		String[] Q2 = dbconnector.selectQuestion("History", 32);
-    	
-        Team teamA = new Team(GameSetUpController.nameA);
-        Team teamB = new Team(GameSetUpController.nameB);
-        
-        Score scoreA = new Score(GameSetUpController.goal);
-        Score scoreB = new Score(GameSetUpController.goal);
+		Question quest1 = new Question(Q);
+		Question quest2 = new Question(Q2);
+		Question.shuffleQuestion();
+		setNewQA();
+		Team teamA = new Team(GameSetUpController.nameA);
+		Team teamB = new Team(GameSetUpController.nameB);
 
-        teamAArea.setText(teamA.getTeamName());
-        teamBArea.setText(teamB.getTeamName());
-        
-       scoreAArea.setText(scoreA.toString());
-        scoreBArea.setText(scoreB.toString());
-       
-        timerLabel.setText(Integer.toString(INITIAL_SECOND));
+		Score scoreA = new Score(GameSetUpController.goal);
+		Score scoreB = new Score(GameSetUpController.goal);
 
-        changeTraversability();
-        disableButtons();
-    }
+		teamAArea.setText(teamA.getTeamName());
+		teamBArea.setText(teamB.getTeamName());
 
-    @FXML
-    public void handleBuzzer(KeyEvent keyEvent) {
-        Buzzer buzzer = new Buzzer();
-        Label[] labels = { teamAArea, teamBArea, timerLabel };
-        buzzer.buzz(keyEvent.getCode(), labels);
-        enableButtons();
-    }
+		scoreAArea.setText(scoreA.toString());
+		scoreBArea.setText(scoreB.toString());
 
-    @FXML
-    private void Exit() {
-        System.exit(0);
-    }
+		timerLabel.setText(Integer.toString(INITIAL_SECOND));
 
-    /*
-     * changeTraversability disables focus that was initially on the wrong buttons,
-     * and initilises it to the buzzerButton object.
-     */
-    private void changeTraversability() {
-        exitButton.setFocusTraversable(false);
-        answerA.setFocusTraversable(false);
-        answerB.setFocusTraversable(false);
-        answerC.setFocusTraversable(false);
-        answerD.setFocusTraversable(false);
-        answerE.setFocusTraversable(false);
-        buzzerButton.setFocusTraversable(true);
-    }
-    
-    private void disableButtons() {
-    	changeButtonStatus(true);
-    }
-    
-    private void enableButtons() {
-    	changeButtonStatus(false);
-    	
-    }
-    
-    public void changeButtonStatus(boolean a) {
-    	answerA.setDisable(a);
-    	answerB.setDisable(a);
-    	answerC.setDisable(a);
-    	answerD.setDisable(a);
-    	answerE.setDisable(a);
-    }
-    
-    public void onAnswerGiven() {
-    	disableButtons();
-    	
-    	//TODO: stopTimer(), checkAnswer(), showCorrectAnswer()
-    }
-    
-    public void timeIsUp() {
-    	
-    }
-    
-   /*
-     private void setNewQA() {
-    	question.suffle();
-    	answerA.setText(question.first);
-    	answerB.setText(question.second);
-    	answerC.setText(question.third);
-    	answerD.setText(question.fourth);
-    	answerE.setText(question.fifth);
-    	questionArea.setText(question.question);
-    }
-    */
+		changeTraversability();
+		disableButtons();
+	}
+
+	@FXML
+	public void handleBuzzer(KeyEvent keyEvent) {
+		Buzzer buzzer = new Buzzer();
+		Label[] labels = { teamAArea, teamBArea, timerLabel };
+		buzzer.buzz(keyEvent.getCode(), labels);
+		enableButtons();
+	}
+
+	@FXML
+	private void Exit() {
+		System.exit(0);
+	}
+
+	/*
+	 * changeTraversability disables focus that was initially on the wrong buttons,
+	 * and initilises it to the buzzerButton object.
+	 */
+	private void changeTraversability() {
+		exitButton.setFocusTraversable(false);
+		answerA.setFocusTraversable(false);
+		answerB.setFocusTraversable(false);
+		answerC.setFocusTraversable(false);
+		answerD.setFocusTraversable(false);
+		answerE.setFocusTraversable(false);
+		buzzerButton.setFocusTraversable(true);
+	}
+
+	private void disableButtons() {
+		changeButtonStatus(true);
+	}
+
+	private void enableButtons() {
+		changeButtonStatus(false);
+
+	}
+
+	public void changeButtonStatus(boolean a) {
+		answerA.setDisable(a);
+		answerB.setDisable(a);
+		answerC.setDisable(a);
+		answerD.setDisable(a);
+		answerE.setDisable(a);
+	}
+
+	public void onAnswerGiven() {
+		disableButtons();
+
+		// TODO: stopTimer(), checkAnswer(), showCorrectAnswer()
+	}
+
+	public void timeIsUp() {
+
+	}
+
+	private void setNewQA() {
+		int quest = 0;
+		answerA.setText(Question.getAnswer(quest, 0));
+		answerB.setText(Question.getAnswer(quest, 1));
+		answerC.setText(Question.getAnswer(quest, 2));
+		answerD.setText(Question.getAnswer(quest, 3));
+		answerE.setText(Question.getAnswer(quest, 4));
+		questionArea.setText(Question.getQuestions(quest));
+	}
 
 }
