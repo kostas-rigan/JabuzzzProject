@@ -28,7 +28,7 @@ public class MainViewController implements Initializable {
 	private static final int INITIAL_SECOND = 5;
     private int quest = 0;
 	private Buzzer buzzer = new Buzzer();
-
+	private DBConnector dbconnector = new DBConnector();
 
 	@FXML
 	private ToggleGroup Options;
@@ -74,12 +74,8 @@ public class MainViewController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		DBConnector dbconnector = new DBConnector();
 		dbconnector.connect();
-		String[] Q = dbconnector.selectQuestion("Geography", 1);
-		String[] Q2 = dbconnector.selectQuestion("Geography", 2);
-		Question quest1 = new Question(Q);
-		Question quest2 = new Question(Q2);
+		loadQuestions();
 		Question.shuffleQuestion();
 		setNewQA();
 		Team teamA = new Team(GameSetUpController.nameA);
@@ -126,11 +122,10 @@ public class MainViewController implements Initializable {
 	 */
 	private void changeTraversability() {
 		exitButton.setFocusTraversable(false);
-		answerA.setFocusTraversable(false);
-		answerB.setFocusTraversable(false);
-		answerC.setFocusTraversable(false);
-		answerD.setFocusTraversable(false);
-		answerE.setFocusTraversable(false);
+		for (Iterator<Toggle> iterator = Options.getToggles().iterator(); iterator.hasNext();) {
+            RadioButton radioButton = (RadioButton) iterator.next();
+            radioButton.setFocusTraversable(false);
+        }
 		buzzerButton.setFocusTraversable(true);
 	}
 
@@ -144,11 +139,10 @@ public class MainViewController implements Initializable {
 	}
 
 	public void changeButtonStatus(boolean a) {
-		answerA.setDisable(a);
-		answerB.setDisable(a);
-		answerC.setDisable(a);
-		answerD.setDisable(a);
-		answerE.setDisable(a);
+	    for (Iterator<Toggle> iterator = Options.getToggles().iterator(); iterator.hasNext();) {
+            RadioButton radioButton = (RadioButton) iterator.next();
+            radioButton.setDisable(a);
+        }
 	}
 
 	public void onAnswerGiven() {
@@ -175,11 +169,12 @@ public class MainViewController implements Initializable {
 	}
 
 	private void setNewQA() {
-		answerA.setText(Question.getAnswer(quest, 0));
-		answerB.setText(Question.getAnswer(quest, 1));
-		answerC.setText(Question.getAnswer(quest, 2));
-		answerD.setText(Question.getAnswer(quest, 3));
-		answerE.setText(Question.getAnswer(quest, 4));
+	    int answer = 0;
+	    for (Iterator<Toggle> iterator = Options.getToggles().iterator(); iterator.hasNext();) {
+            RadioButton radioButton = (RadioButton) iterator.next();
+            radioButton.setText(Question.getAnswer(quest, answer));
+            answer++;
+        }
 		questionArea.setText(Question.getQuestions(quest));
 		quest++;
 	}
@@ -202,5 +197,11 @@ public class MainViewController implements Initializable {
 	            new BackgroundFill(Paint.valueOf(color),
 	            new CornerRadii(0.1, true), null));
         button.setBackground(background);
+	}
+
+	private void loadQuestions() {
+	    for (int i = 1; i <= 5; i++) {
+	        new Question(dbconnector.selectQuestion("Geography", i));
+        }
 	}
 }
