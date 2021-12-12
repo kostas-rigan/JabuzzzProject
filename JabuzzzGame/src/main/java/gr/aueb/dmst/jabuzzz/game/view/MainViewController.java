@@ -29,6 +29,10 @@ public class MainViewController implements Initializable {
     private int quest = 0;
 	private Buzzer buzzer = new Buzzer();
 	private DBConnector dbconnector = new DBConnector();
+	private Score scoreA;
+	private Score scoreB;
+	private Score playingTeamScore;
+	private Label playingTeamScoreArea;
 
 	@FXML
 	private ToggleGroup Options;
@@ -81,8 +85,8 @@ public class MainViewController implements Initializable {
 		Team teamA = new Team(GameSetUpController.nameA);
 		Team teamB = new Team(GameSetUpController.nameB);
 
-		Score scoreA = new Score(GameSetUpController.goal);
-		Score scoreB = new Score(GameSetUpController.goal);
+		scoreA = new Score(GameSetUpController.goal);
+		scoreB = new Score(GameSetUpController.goal);
 
 		teamAArea.setText(teamA.getTeamName());
 		teamBArea.setText(teamB.getTeamName());
@@ -105,6 +109,13 @@ public class MainViewController implements Initializable {
 	public void handleBuzzer(KeyEvent keyEvent) {
 	    if (keyEvent.getCode() == KeyCode.A || keyEvent.getCode() == KeyCode.L) {
 	        exitButton.requestFocus();
+	        if (keyEvent.getCode() == KeyCode.A) {
+                playingTeamScore = scoreA;
+                playingTeamScoreArea = scoreAArea;
+            } else {
+                playingTeamScore = scoreB;
+                playingTeamScoreArea = scoreBArea;
+            }
 	        Label[] labels = { teamAArea, teamBArea, timerLabel };
 	        buzzer.buzz(keyEvent.getCode(), labels);
 	        enableButtons();
@@ -153,19 +164,19 @@ public class MainViewController implements Initializable {
 	}
 
 	public void timeIsUp() {
-
+	    
 	}
 
 	private void checkAnswer() {
 	    RadioButton button = (RadioButton) Options.getSelectedToggle();
 	    String correctAnswer = Question.getCorrectAnswer(quest); 
-	    // TODO: change score in if else statement
 	    if (button.getText().equals(correctAnswer)) {
-	        System.out.println("Correct answer");
+	        playingTeamScore.correctAnswer();
 	    } else {
+	        playingTeamScore.wrongAnswer();
 	        changeBackgroundColor("red", button);
-	        System.out.println("Wrong answer");
 	    }
+	    playingTeamScoreArea.setText(playingTeamScore.toString());
 	}
 
 	private void setNewQA() {

@@ -34,18 +34,12 @@ public class Buzzer {
         FontWeight fontWeight = FontWeight.BOLD;
         switch (keyCode) { // inspecting key code
         case A:
-            /*
-             * playingTeam = new Team(teamDisplays[0].getText());
-             */
             displays[0]
                     .setFont(Font.font(displays[0].getFont().getFamily(), fontWeight, displays[0].getFont().getSize()));
             // sets team A's font weight to bold
             timer.startTimer();
             break;
         case L:
-            /*
-             * playingTeam = new Team(teamDisplays[1].getText());
-             */
             displays[1]
                     .setFont(Font.font(displays[1].getFont().getFamily(), fontWeight, displays[1].getFont().getSize()));
             // sets team B's font weight to bold

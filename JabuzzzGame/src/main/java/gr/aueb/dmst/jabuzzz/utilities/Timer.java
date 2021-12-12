@@ -36,7 +36,7 @@ public class Timer {
      * 1000 milliseconds = 1 second.
      */
     private static final long PERIOD = 1000; // in milliseconds
-    
+
     public Timer(Label timerLabel) {
         this.timerLabel = timerLabel;
     }
@@ -63,7 +63,8 @@ public class Timer {
     }
 
     /**
-     * stopTimer method cancels the procedure in startTimer method before the timer ends.
+     * stopTimer method cancels the procedure in startTimer method before the timer
+     * ends.
      */
     public void stopTimer() {
         timer.cancel();
