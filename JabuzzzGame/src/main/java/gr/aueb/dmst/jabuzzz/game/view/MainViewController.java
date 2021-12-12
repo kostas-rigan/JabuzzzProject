@@ -3,6 +3,7 @@ package main.java.gr.aueb.dmst.jabuzzz.game.view;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -156,11 +157,16 @@ public class MainViewController implements Initializable {
         }
 	}
 
-	public void onAnswerGiven() {
+	public void onAnswerGiven() throws InterruptedException {
 		disableButtons();
 		stopTimer();
 		checkAnswer();
 		showCorrectAnswer();
+		//below they do not work
+		//TimeUnit.SECONDS.sleep(5);
+		
+		//setNewQA();
+		
 	}
 
 	public void timeIsUp() {
@@ -174,7 +180,7 @@ public class MainViewController implements Initializable {
 	        playingTeamScore.correctAnswer();
 	    } else {
 	        playingTeamScore.wrongAnswer();
-	        changeBackgroundColor("red", button);
+	        changeBackgroundColor("#f17b8f", button);
 	    }
 	    playingTeamScoreArea.setText(playingTeamScore.toString());
 	}
@@ -198,7 +204,7 @@ public class MainViewController implements Initializable {
 	    for (Iterator<Toggle> iterator = Options.getToggles().iterator(); iterator.hasNext();) {
             RadioButton button = (RadioButton) iterator.next();
             if (button.getText().equals(Question.getCorrectAnswer(quest))) {
-                changeBackgroundColor("green", button);
+                changeBackgroundColor("#b3f17b", button);
             }
         }
 	}
