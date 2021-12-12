@@ -14,11 +14,8 @@
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="673.0" prefWidth="985.0" style="-fx-background-color: #e1eef9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.gr.aueb.dmst.jabuzzz.game.view.MainViewController">
    <center>
       <VBox prefHeight="470.0" prefWidth="669.0" BorderPane.alignment="CENTER">
-         <padding>
-            <Insets top="100.0" />
-         </padding>
          <children>
-            <Label fx:id="questionArea" alignment="CENTER" contentDisplay="CENTER" prefHeight="112.0" prefWidth="675.0" text="What is your name?">
+            <Label fx:id="questionArea" alignment="CENTER" contentDisplay="CENTER" prefHeight="186.0" prefWidth="594.0" style="-fx-wrap-text: true;" text="What is your name? jhvfkwufyyucgoasiubwodufhdgkauyfdkeehdjldiglid">
                <font>
                   <Font name="Comic Sans MS" size="36.0" />
                </font>
@@ -70,6 +67,9 @@
                </VBox.margin>
             </RadioButton>
          </children>
+         <padding>
+            <Insets top="25.0" />
+         </padding>
       </VBox>
    </center>
    <top>
