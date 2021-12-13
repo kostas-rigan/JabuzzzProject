@@ -3,8 +3,10 @@ package main.java.gr.aueb.dmst.jabuzzz.game.view;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.ResourceBundle;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -23,6 +25,7 @@ import main.java.gr.aueb.dmst.jabuzzz.entities.Score;
 import main.java.gr.aueb.dmst.jabuzzz.dbconnector.DBConnector;
 import main.java.gr.aueb.dmst.jabuzzz.entities.Team;
 import main.java.gr.aueb.dmst.jabuzzz.utilities.Buzzer;
+import main.java.gr.aueb.dmst.jabuzzz.utilities.Timer;
 
 public class MainViewController implements Initializable {
 
@@ -34,12 +37,17 @@ public class MainViewController implements Initializable {
 	private Score scoreB;
 	private Score playingTeamScore;
 	private Label playingTeamScoreArea;
+	private Timer timer;
+	private int currentSecond = INITIAL_SECOND;
 
 	@FXML
 	private ToggleGroup Options;
 
 	@FXML
 	private Button exitButton;
+	
+	@FXML
+    private Button nextButton;
 
 	@FXML
 	private Button buzzerButton;
@@ -96,6 +104,7 @@ public class MainViewController implements Initializable {
 		scoreBArea.setText(scoreB.toString());
 
 		timerLabel.setText(Integer.toString(INITIAL_SECOND));
+		timer = new Timer(timerLabel);
 
 		changeTraversability();
 		disableButtons();
@@ -107,7 +116,7 @@ public class MainViewController implements Initializable {
 	 * @param keyEvent the first key pressed by either team.
 	 */
 	@FXML
-	public void handleBuzzer(KeyEvent keyEvent) {
+	public void handleBuzzer(KeyEvent keyEvent) throws InterruptedException {
 	    if (keyEvent.getCode() == KeyCode.A || keyEvent.getCode() == KeyCode.L) {
 	        exitButton.requestFocus();
 	        if (keyEvent.getCode() == KeyCode.A) {
@@ -117,9 +126,12 @@ public class MainViewController implements Initializable {
                 playingTeamScore = scoreB;
                 playingTeamScoreArea = scoreBArea;
             }
-	        Label[] labels = { teamAArea, teamBArea, timerLabel };
+
+	        Label[] labels = { teamAArea, teamBArea };
 	        buzzer.buzz(keyEvent.getCode(), labels);
+            timer.startTimer();
 	        enableButtons();
+	        controlTimeUp();
         }
 	}
 
@@ -162,15 +174,14 @@ public class MainViewController implements Initializable {
 		stopTimer();
 		checkAnswer();
 		showCorrectAnswer();
-		//below they do not work
-		//TimeUnit.SECONDS.sleep(5);
-		
-		//setNewQA();
-		
+		nextButton.setOpacity(1);
 	}
 
 	public void timeIsUp() {
-	    
+	    disableButtons();
+	    showCorrectAnswer();
+	    currentSecond = INITIAL_SECOND;
+	    nextButton.setOpacity(1);
 	}
 
 	private void checkAnswer() {
@@ -197,7 +208,7 @@ public class MainViewController implements Initializable {
 	}
 	
 	private void stopTimer() {
-	    buzzer.stop();
+	    timer.stopTimer();
 	}
 
 	private void showCorrectAnswer() {
@@ -220,5 +231,22 @@ public class MainViewController implements Initializable {
 	    for (int i = 1; i <= 5; i++) {
 	        new Question(dbconnector.selectQuestion("Geography", i));
         }
+	}
+	
+	private void controlTimeUp() {
+	    timer.scheduleAtFixedRate(new TimerTask() {
+            
+            @Override
+            public void run() {     
+                if (currentSecond > 0) {
+                    currentSecond--;
+                } else {
+                    if (timerLabel.getText().equals("0")) {
+                        timeIsUp();
+                    }
+                    timer.cancel();
+                }
+            }
+        }, 500, 1000);
 	}
 }
