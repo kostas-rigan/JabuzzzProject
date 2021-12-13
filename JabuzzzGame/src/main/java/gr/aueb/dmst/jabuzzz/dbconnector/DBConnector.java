@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 public class DBConnector {
 	private Connection conn;
@@ -24,9 +23,8 @@ public class DBConnector {
 
 	}
 
-	public String[] selectQuestion(int id) {
-
-		String sql = String.format("SELECT Description, Right_answer, Wrong_answer1, Wrong_answer2, Wrong_answer3, Wrong_answer4 FROM Questions WHERE Question_id = %d", id);
+	public String[] selectQuestion(String category, int id) {
+		String sql = String.format("SELECT Description, Right_answer, Wrong_answer1, Wrong_answer2, Wrong_answer3, Wrong_answer4 FROM Questions WHERE category = '%s' and Question_id = %d", category, id);
 
 		try(
 				Statement stmt = conn.createStatement();
@@ -49,26 +47,5 @@ public class DBConnector {
 			System.out.println(e.getMessage());
 			return null;
 		}
-	}
-	
-	public ArrayList<Integer> selectQuestionId(String category){
-		ArrayList<Integer> ids = new ArrayList<Integer>();
-		
-		String sql = String.format("SELECT Question_id FROM Questions WHERE Category = %s",category);
-
-		try(
-				Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery(sql)) {
-
-			// loop through the result set
-			while (rs.next()) {
-				ids.add((Integer) rs.getObject(0));
-			}
-			
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			return null;
-		}
-		return ids;
 	}
 }
