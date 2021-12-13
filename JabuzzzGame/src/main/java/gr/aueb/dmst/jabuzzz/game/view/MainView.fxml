@@ -114,6 +114,7 @@
                   <Insets right="25.0" />
                </padding>
             </Label>
+            <Button fx:id="buzzerButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onKeyPressed="#handleBuzzer" opacity="0.0" text="Buzzer" />
          </children>
       </VBox>
    </right>
@@ -140,13 +141,13 @@
       </VBox>
    </left>
    <bottom>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Region prefHeight="100.0" prefWidth="454.0" />
-            <Button fx:id="buzzerButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onKeyPressed="#handleBuzzer" opacity="0.0" text="Buzzer">
-               <HBox.margin>
-                  <Insets top="20.0" />
-               </HBox.margin>
+            <Button fx:id="nextButton" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#Exit" opacity="0.0" style="-fx-background-color: #c95d6a;" text="Επόμενο">
+               <font>
+                  <Font name="Comic Sans MS Bold Italic" size="15.0" />
+               </font>
             </Button>
          </children>
       </HBox>

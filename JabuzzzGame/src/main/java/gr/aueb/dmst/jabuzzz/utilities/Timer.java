@@ -12,9 +12,8 @@ import java.util.TimerTask;
  * @author NicholasKarakostas
  *
  */
-public class Timer {
-    // making a new Timer object for countdown
-    java.util.Timer timer = new java.util.Timer();
+public class Timer extends java.util.Timer{
+ 
     private Label timerLabel;
     /**
      * STARTING_SECOND is the initial value of currentSecond field, which is the 5th
@@ -41,6 +40,7 @@ public class Timer {
         this.timerLabel = timerLabel;
     }
 
+    
     /**
      * This method initiates the timer used in buzz method of Buzzer class.
      * 
@@ -50,16 +50,16 @@ public class Timer {
         /*
          * this will start the countdown, changing time left at a fixed rate
          */
-        timer.scheduleAtFixedRate(new TimerTask() {
+        this.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 if (currentSecond > 0) {
                     Platform.runLater(() -> timerLabel.setText(Integer.toString(currentSecond)));
                     currentSecond--;
                 } else {
-                    timer.cancel();
+                    this.cancel();
                 }
             }
-        }, DELAY, PERIOD);
+        }, DELAY, PERIOD);        
     }
 
     /**
@@ -67,6 +67,6 @@ public class Timer {
      * ends.
      */
     public void stopTimer() {
-        timer.cancel();
+        this.cancel();
     }
 }
