@@ -144,7 +144,7 @@
       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Region prefHeight="100.0" prefWidth="454.0" />
-            <Button fx:id="nextButton" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#Exit" opacity="0.0" style="-fx-background-color: #c95d6a;" text="Επόμενο">
+            <Button fx:id="nextButton" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#setNextQuestion" opacity="0.0" style="-fx-background-color: #c95d6a;" text="Επόμενο">
                <font>
                   <Font name="Comic Sans MS Bold Italic" size="15.0" />
                </font>

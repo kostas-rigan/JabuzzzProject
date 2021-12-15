@@ -56,6 +56,7 @@ public class Timer extends java.util.Timer{
                     Platform.runLater(() -> timerLabel.setText(Integer.toString(currentSecond)));
                     currentSecond--;
                 } else {
+                    currentSecond = STARTING_SECOND;
                     this.cancel();
                 }
             }
