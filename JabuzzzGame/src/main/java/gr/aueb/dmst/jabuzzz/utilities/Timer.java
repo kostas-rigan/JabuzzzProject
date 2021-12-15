@@ -8,9 +8,6 @@ import java.util.TimerTask;
 /**
  * Timer class(different from java.lang.Timer) is used to function the timer
  * utility used from the buzz method of a Buzzer object.
- * 
- * @author NicholasKarakostas
- *
  */
 public class Timer extends java.util.Timer{
  

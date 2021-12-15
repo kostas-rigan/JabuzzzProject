@@ -3,7 +3,6 @@ package main.java.gr.aueb.dmst.jabuzzz.entities;
 /**
  * Representation of Team concept.
  * 
- * @author kostas-rigan
  * @version 1.0 17/11/2021
  */
 

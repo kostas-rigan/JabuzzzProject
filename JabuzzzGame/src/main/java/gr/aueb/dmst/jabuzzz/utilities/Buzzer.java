@@ -12,7 +12,6 @@ import javafx.scene.text.FontWeight;
  * In question scene a Buzzer object is used for teams to press it and be able
  * to answer the question.
  * 
- * @author kostas-rigan
  * @version 1.0 20/11/2021
  */
 

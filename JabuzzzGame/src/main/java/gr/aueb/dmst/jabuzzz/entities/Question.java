@@ -8,7 +8,6 @@ import java.util.Random;
  * the answers to the following positions shuffles it and give back the question
  * and the possible answers.
  * 
- * @author Konstantinos_Terlakis
  * @version 1.0 11/12/2021
  */
 public class Question {
@@ -29,17 +28,18 @@ public class Question {
 	 */
 	public Question(String[] questionAndAnswers) {
 		questions[numberOfQuestions] = (questionAndAnswers[0]);
-		numberOfQuestions++;
+		
 		/*
 		 * initialization of the Array answer
 		 */
 		for (int i = 1; i < questionAndAnswers.length; i++) {
-			Question.answer[numberOfQuestions - 1][i - 1] = questionAndAnswers[i];
+			Question.answer[numberOfQuestions][i - 1] = questionAndAnswers[i];
 		}
 		/*
 		 * initialization of the correctAnswer
 		 */
 		Question.correctAnswer[numberOfQuestions] = questionAndAnswers[1];
+		numberOfQuestions++;
 		shuffleAnswers();
 	}
 

@@ -147,6 +147,7 @@ public class MainViewController implements Initializable {
     @FXML
     void setNextQuestion(ActionEvent event) {
         timerLabel.setText(Integer.toString(INITIAL_SECOND));
+        quest++;
         setNewQA();
         nextButton.setOpacity(0);
         nextButton.setDisable(true);
@@ -220,7 +221,6 @@ public class MainViewController implements Initializable {
             answer++;
         }
         questionArea.setText(Question.getQuestions(quest));
-        quest++;
     }
 
     private void stopTimer() {

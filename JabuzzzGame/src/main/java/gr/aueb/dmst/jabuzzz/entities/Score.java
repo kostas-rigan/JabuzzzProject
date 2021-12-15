@@ -6,7 +6,6 @@ import main.java.gr.aueb.dmst.jabuzzz.utilities.Exit;
  * Class Score changes the team score and checks if the top or bottom target has
  * been reached.
  * 
- * @author Konstantinos_Terlakis
  * @version 1.0 25/11/2021
  */
 public class Score {

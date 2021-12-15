@@ -1,7 +1,6 @@
 package main.java.gr.aueb.dmst.jabuzzz.entities;
 /**
  * Class Category is responsible for which categories the player will play.
- * @author Konstantinos_Terlakis
  * @version 1.0 25/11/2021
  */
 public class Category {
