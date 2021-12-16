@@ -6,7 +6,12 @@ import java.util.ResourceBundle;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,6 +27,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.util.Duration;
 import main.java.gr.aueb.dmst.jabuzzz.entities.Question;
 import main.java.gr.aueb.dmst.jabuzzz.entities.Score;
 import main.java.gr.aueb.dmst.jabuzzz.dbconnector.DBConnector;
@@ -41,6 +47,8 @@ public class MainViewController implements Initializable {
     private Label playingTeamScoreArea;
     private Timer timer;
     private int currentSecond = INITIAL_SECOND;
+    private IntegerProperty timeSeconds = new SimpleIntegerProperty(INITIAL_SECOND);
+    private Timeline timeline;
 
     @FXML
     private ToggleGroup Options;
@@ -105,7 +113,8 @@ public class MainViewController implements Initializable {
         scoreAArea.setText(scoreA.toString());
         scoreBArea.setText(scoreB.toString());
 
-        timerLabel.setText(Integer.toString(INITIAL_SECOND));
+        // timerLabel.setText(Integer.toString(INITIAL_SECOND));
+        timerLabel.textProperty().bind(timeSeconds.asString());
         timer = new Timer(timerLabel);
 
         changeTraversability();
@@ -133,7 +142,8 @@ public class MainViewController implements Initializable {
             Label[] labels = { teamAArea, teamBArea };
             buzzer.buzz(keyEvent.getCode(), labels);
             timer = new Timer(timerLabel);
-            timer.startTimer();
+            // timer.startTimer();
+            initiateTimer();
             enableButtons();
             controlTimeUp();
         }
@@ -146,13 +156,25 @@ public class MainViewController implements Initializable {
 
     @FXML
     void setNextQuestion(ActionEvent event) {
-        timerLabel.setText(Integer.toString(INITIAL_SECOND));
+        // timerLabel.setText(Integer.toString(INITIAL_SECOND));
         quest++;
         setNewQA();
         nextButton.setOpacity(0);
         nextButton.setDisable(true);
         unselectButton();
         resetRadioButtonBGColour();
+        // timer.resetNotInterrupted();
+        // timer.resetInitialSecond();
+    }
+
+    private void initiateTimer() {
+        if (timeline != null) {
+            timeline.stop();
+        }
+        timeSeconds.set(INITIAL_SECOND);
+        timeline = new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(INITIAL_SECOND + 1), new KeyValue(timeSeconds, 0)));
+        timeline.playFromStart();
     }
 
     /*
@@ -223,6 +245,8 @@ public class MainViewController implements Initializable {
         questionArea.setText(Question.getQuestions(quest));
     }
 
+    // TODO(Nikos, Maryanna): change method utility to stop timer after answer is
+    // given
     private void stopTimer() {
         timer.stopTimer();
     }
@@ -242,6 +266,7 @@ public class MainViewController implements Initializable {
         button.setBackground(background);
     }
 
+    // TODO(Nikos, Maryanna): fix question loading from database, to show questions properly
     private void loadQuestions() {
         for (int i = 1; i <= 5; i++) {
             new Question(dbconnector.selectQuestion("Geography", i));
@@ -264,19 +289,18 @@ public class MainViewController implements Initializable {
             }
         }, 500, 1000);
     }
-    
+
     private void unselectButton() {
         for (Iterator<Toggle> iterator = Options.getToggles().iterator(); iterator.hasNext();) {
             RadioButton button = (RadioButton) iterator.next();
             button.setSelected(false);
         }
     }
-    
+
     private void resetRadioButtonBGColour() {
         for (Iterator<Toggle> iterator = Options.getToggles().iterator(); iterator.hasNext();) {
             RadioButton button = (RadioButton) iterator.next();
-            Background background = new Background(
-                    new BackgroundFill(null, null, null));
+            Background background = new Background(new BackgroundFill(null, null, null));
             button.setBackground(background);
         }
     }

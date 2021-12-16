@@ -9,8 +9,8 @@ import java.util.TimerTask;
  * Timer class(different from java.lang.Timer) is used to function the timer
  * utility used from the buzz method of a Buzzer object.
  */
-public class Timer extends java.util.Timer{
- 
+public class Timer extends java.util.Timer {
+    private boolean notInterrupted;
     private Label timerLabel;
     /**
      * STARTING_SECOND is the initial value of currentSecond field, which is the 5th
@@ -35,9 +35,9 @@ public class Timer extends java.util.Timer{
 
     public Timer(Label timerLabel) {
         this.timerLabel = timerLabel;
+        notInterrupted = true;
     }
 
-    
     /**
      * This method initiates the timer used in buzz method of Buzzer class.
      * 
@@ -49,22 +49,33 @@ public class Timer extends java.util.Timer{
          */
         this.scheduleAtFixedRate(new TimerTask() {
             public void run() {
-                if (currentSecond > 0) {
+                if (currentSecond > 0 && notInterrupted) {
                     Platform.runLater(() -> timerLabel.setText(Integer.toString(currentSecond)));
+                    System.out.println(currentSecond);
                     currentSecond--;
+                } else if (currentSecond == 0 || !notInterrupted) {
+                    // currentSecond = STARTING_SECOND;
+                    // resetNotInterrupted();
                 } else {
-                    currentSecond = STARTING_SECOND;
                     this.cancel();
                 }
             }
-        }, DELAY, PERIOD);        
+        }, DELAY, PERIOD);
     }
 
     /**
-     * stopTimer method cancels the procedure in startTimer method before the timer
-     * ends.
+     * stopTimer method interupts the procedure in startTimer method before the
+     * timer ends.
      */
     public void stopTimer() {
-        this.cancel();
+        notInterrupted = false;
+    }
+
+    public void resetNotInterrupted() {
+        notInterrupted = true;
+    }
+
+    public void resetInitialSecond() {
+        currentSecond = STARTING_SECOND;
     }
 }
