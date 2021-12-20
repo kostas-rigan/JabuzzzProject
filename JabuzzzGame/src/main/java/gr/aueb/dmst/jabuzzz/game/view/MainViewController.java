@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -25,7 +24,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.util.Duration;
 import main.java.gr.aueb.dmst.jabuzzz.entities.Question;
@@ -141,12 +139,34 @@ public class MainViewController implements Initializable {
 
             Label[] labels = { teamAArea, teamBArea };
             buzzer.buzz(keyEvent.getCode(), labels);
+            // important to reinitialize timer object for controlTimeUp
+            // TODO(Kostas): check if it can be done without a timer object
             timer = new Timer(timerLabel);
-            // timer.startTimer();
             initiateTimer();
             enableButtons();
             controlTimeUp();
         }
+    }
+
+    /**
+     * Initiates actions when the playing team answers the question.
+     * 
+     * Stops the timer and disables the answer buttons, checks if
+     * response is correct or wrong and evaluates if the team won
+     * (reached maximum points) or lost(reached -5), giving the win
+     * to the other team.
+     * 
+     * @throws InterruptedException
+     */
+    @FXML
+    public void onAnswerGiven() throws InterruptedException {
+        disableButtons();
+        stopTimer();
+        checkAnswer();
+        showCorrectAnswer();
+        nextButton.setOpacity(1);
+        nextButton.setDisable(false);
+        // TODO(Kostas): check game over conditions
     }
 
     @FXML
@@ -154,19 +174,25 @@ public class MainViewController implements Initializable {
         System.exit(0);
     }
 
+    /**
+     * Changes to the next question after a round is finished.
+     * 
+     * @param event the button pressed to advance to the next round
+     */
     @FXML
     void setNextQuestion(ActionEvent event) {
-        // timerLabel.setText(Integer.toString(INITIAL_SECOND));
+        timeSeconds.set(INITIAL_SECOND);
         quest++;
         setNewQA();
         nextButton.setOpacity(0);
         nextButton.setDisable(true);
         unselectButton();
         resetRadioButtonBGColour();
-        // timer.resetNotInterrupted();
-        // timer.resetInitialSecond();
     }
 
+    /*
+     * Initiates count down when either team has pressed their respective key to answer the question.
+     */
     private void initiateTimer() {
         if (timeline != null) {
             timeline.stop();
@@ -190,39 +216,54 @@ public class MainViewController implements Initializable {
         buzzerButton.setFocusTraversable(true);
     }
 
+    // disables radio buttons
     private void disableButtons() {
         changeButtonStatus(true);
     }
 
+    // enable radio buttons
     private void enableButtons() {
         changeButtonStatus(false);
 
     }
 
-    public void changeButtonStatus(boolean a) {
+    /*
+     * Depending on the boolean value, it disables(true) or enables(false)
+     * the radio buttons on screen.
+     */
+    private void changeButtonStatus(boolean a) {
         for (Iterator<Toggle> iterator = Options.getToggles().iterator(); iterator.hasNext();) {
             RadioButton radioButton = (RadioButton) iterator.next();
             radioButton.setDisable(a);
         }
     }
 
-    public void onAnswerGiven() throws InterruptedException {
-        disableButtons();
-        stopTimer();
-        checkAnswer();
-        showCorrectAnswer();
-        nextButton.setOpacity(1);
-        nextButton.setDisable(false);
-    }
-
-    public void timeIsUp() {
+    /*
+     * Controls actions used when timer's count down is over.
+     * Makes the proper changes to the interface when the playing team hasn't answered
+     * and checks if there is a game over condition.
+     */
+    private void timeIsUp() {
         disableButtons();
         showCorrectAnswer();
         currentSecond = INITIAL_SECOND;
+        playingTeamScore.wrongAnswer();
+        Platform.runLater(new Runnable() {
+            
+            @Override
+            public void run() {
+                playingTeamScoreArea.setText(playingTeamScore.toString());
+            }
+        });
         nextButton.setOpacity(1);
         nextButton.setDisable(false);
+        // TODO(Kostas): check game over conditions
     }
 
+    /*
+     * When the team answers a question, their answer is checked to see if
+     * it was correct or wrong and alters their score accordingly.
+     */
     private void checkAnswer() {
         RadioButton button = (RadioButton) Options.getSelectedToggle();
         String correctAnswer = Question.getCorrectAnswer(quest);
@@ -235,6 +276,9 @@ public class MainViewController implements Initializable {
         playingTeamScoreArea.setText(playingTeamScore.toString());
     }
 
+    /*
+     * At the beginning of each turn loads a question from the list and displays it on screen.
+     */
     private void setNewQA() {
         int answer = 0;
         for (Iterator<Toggle> iterator = Options.getToggles().iterator(); iterator.hasNext();) {
@@ -245,12 +289,21 @@ public class MainViewController implements Initializable {
         questionArea.setText(Question.getQuestions(quest));
     }
 
-    // TODO(Nikos, Maryanna): change method utility to stop timer after answer is
-    // given
+    /*
+     * Cancels current timeline object count down if the playing team has answered their question.
+     */
     private void stopTimer() {
-        timer.stopTimer();
+        if (Options.getSelectedToggle() != null) {
+            timeline.stop();
+        }
+        currentSecond = INITIAL_SECOND;
     }
 
+    /*
+     * Shows to both teams which was the correct answer either responded or not.
+     * On screen it is highlighted with a green colour.
+     * #b3f17b -> in hexadecimal system it is a greenish colour.
+     */
     private void showCorrectAnswer() {
         for (Iterator<Toggle> iterator = Options.getToggles().iterator(); iterator.hasNext();) {
             RadioButton button = (RadioButton) iterator.next();
@@ -260,13 +313,21 @@ public class MainViewController implements Initializable {
         }
     }
 
+    /*
+     * Given a colour and a radio button, it highlights the background colour of the button,
+     * sharpening a bit the corners giving a more round look.
+     */
     private void changeBackgroundColor(String color, RadioButton button) {
         Background background = new Background(
                 new BackgroundFill(Paint.valueOf(color), new CornerRadii(0.1, true), null));
         button.setBackground(background);
     }
 
-    // TODO(Nikos, Maryanna): fix question loading from database, to show questions properly
+    /*
+     * Loads questions from database, depending on categories given in game setup.
+     * 
+     * TODO: change it to load questions more dynamically.
+     */
     private void loadQuestions() {
         for (int i = 1; i <= 5; i++) {
             new Question(dbconnector.selectQuestion("Geography", i));
@@ -287,9 +348,13 @@ public class MainViewController implements Initializable {
                     timer.cancel();
                 }
             }
-        }, 500, 1000);
+        }, 500, 1000); 
     }
 
+    /**
+     * After an answer is given, it clears the selection of every button
+     * TODO: find a way to not loop through every button
+     */
     private void unselectButton() {
         for (Iterator<Toggle> iterator = Options.getToggles().iterator(); iterator.hasNext();) {
             RadioButton button = (RadioButton) iterator.next();
@@ -297,6 +362,11 @@ public class MainViewController implements Initializable {
         }
     }
 
+    /*
+     * After each turn has passed, it clears the background colour of every radio button.
+     * Loop is used because when a wrong answer is given, there are two radio buttons with
+     * a background colour.
+     */
     private void resetRadioButtonBGColour() {
         for (Iterator<Toggle> iterator = Options.getToggles().iterator(); iterator.hasNext();) {
             RadioButton button = (RadioButton) iterator.next();
