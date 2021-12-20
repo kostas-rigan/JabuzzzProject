@@ -43,10 +43,12 @@ public class MainViewController implements Initializable {
     private Score scoreB;
     private Score playingTeamScore;
     private Label playingTeamScoreArea;
+    private String playingTeam;
     private Timer timer;
     private int currentSecond = INITIAL_SECOND;
     private IntegerProperty timeSeconds = new SimpleIntegerProperty(INITIAL_SECOND);
     private Timeline timeline;
+    private int pointsToFinish;
 
     @FXML
     private ToggleGroup Options;
@@ -102,8 +104,8 @@ public class MainViewController implements Initializable {
         Team teamA = new Team(GameSetUpController.nameA);
         Team teamB = new Team(GameSetUpController.nameB);
 
-        scoreA = new Score(GameSetUpController.goal);
-        scoreB = new Score(GameSetUpController.goal);
+        scoreA = new Score();
+        scoreB = new Score();
 
         teamAArea.setText(teamA.getTeamName());
         teamBArea.setText(teamB.getTeamName());
@@ -114,6 +116,8 @@ public class MainViewController implements Initializable {
         // timerLabel.setText(Integer.toString(INITIAL_SECOND));
         timerLabel.textProperty().bind(timeSeconds.asString());
         timer = new Timer(timerLabel);
+
+        pointsToFinish = GameSetUpController.getFinishPoints();
 
         changeTraversability();
         disableButtons();
@@ -132,9 +136,11 @@ public class MainViewController implements Initializable {
             if (keyEvent.getCode() == KeyCode.A) {
                 playingTeamScore = scoreA;
                 playingTeamScoreArea = scoreAArea;
+                playingTeam = teamAArea.getText();
             } else {
                 playingTeamScore = scoreB;
                 playingTeamScoreArea = scoreBArea;
+                playingTeam = teamBArea.getText();
             }
 
             Label[] labels = { teamAArea, teamBArea };
@@ -166,7 +172,7 @@ public class MainViewController implements Initializable {
         showCorrectAnswer();
         nextButton.setOpacity(1);
         nextButton.setDisable(false);
-        // TODO(Kostas): check game over conditions
+        checkGameOver();
     }
 
     @FXML
@@ -257,7 +263,7 @@ public class MainViewController implements Initializable {
         });
         nextButton.setOpacity(1);
         nextButton.setDisable(false);
-        // TODO(Kostas): check game over conditions
+        checkGameOver();
     }
 
     /*
@@ -334,6 +340,10 @@ public class MainViewController implements Initializable {
         }
     }
 
+    /*
+     * Handles the event of timer finishing its count down without a question
+     * being answered.
+     */
     private void controlTimeUp() {
         timer.scheduleAtFixedRate(new TimerTask() {
 
@@ -373,5 +383,48 @@ public class MainViewController implements Initializable {
             Background background = new Background(new BackgroundFill(null, null, null));
             button.setBackground(background);
         }
+    }
+
+    /*
+     * Check if the playing team has reached maximum points or lowest points
+     * and determine the winner team.
+     */
+    private void checkGameOver() {
+        if (playingTeamScore.getTeamsScore() == pointsToFinish) {
+            hideAndDisableInWinner();
+            showWinner(playingTeam);
+        } else if (playingTeamScore.getTeamsScore() == -5){
+            hideAndDisableInWinner();
+            if (playingTeam.equals(teamAArea.getText())) {
+                showWinner(teamBArea.getText());
+            } else {
+                showWinner(teamAArea.getText());
+            }
+        }
+    }
+
+    /*
+     * Show the winning team, which is given by a String representation.
+     */
+    private void showWinner(String winnerTeam) {
+        String winningMessage = "\tΤέλος Παιχνιδιού\nΗ ομάδα " + winnerTeam + " κέρδισε!!";
+        questionArea.setText(winningMessage);
+    }
+
+    /*
+     * Hide every unnecessary object when a winning team has been determined.
+     */
+    private void hideAndDisableInWinner() {
+        for (Iterator<Toggle> iterator = Options.getToggles().iterator(); iterator.hasNext();) {
+            RadioButton button = (RadioButton) iterator.next();
+            button.setOpacity(0);
+        }
+        scoreAArea.setOpacity(0);
+        scoreBArea.setOpacity(0);
+        teamAArea.setOpacity(0);
+        teamBArea.setOpacity(0);
+        timerLabel.setOpacity(0);
+        nextButton.setDisable(true);
+        nextButton.setOpacity(0);
     }
 }

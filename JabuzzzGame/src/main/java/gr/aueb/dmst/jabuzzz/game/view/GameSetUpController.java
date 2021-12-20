@@ -85,4 +85,8 @@ public class GameSetUpController implements Initializable {
         }
 
     }
+
+    public static int getFinishPoints() {
+        return goal;
+    }
 }

@@ -1,7 +1,5 @@
 package main.java.gr.aueb.dmst.jabuzzz.entities;
 
-import main.java.gr.aueb.dmst.jabuzzz.utilities.Exit;
-
 /**
  * Class Score changes the team score and checks if the top or bottom target has
  * been reached.
@@ -14,18 +12,12 @@ public class Score {
      */
     private int teamsScore;
     /*
-     * target is the mark that a team must reach
-     */
-    private int target;
-
-    /*
      * Class constructor specifying teams target.
      * 
      * @param target
      */
-    public Score(int target) {
+    public Score() {
         teamsScore = 0;
-        this.target = target;
     }
 
     /*
@@ -34,15 +26,6 @@ public class Score {
      */
     public void correctAnswer() {
         teamsScore += 1;
-        /*
-         * check if theamScore is equal to target.
-         */
-        if (teamsScore == target) {
-            /*
-             * exit game
-             */
-            Exit.exitGame();
-        }
     }
 
     /*
@@ -51,15 +34,6 @@ public class Score {
      */
     public void wrongAnswer() {
         teamsScore -= 1;
-        /*
-         * check if theamScore is equal bottom mark.
-         */
-        if (teamsScore == -5) {
-            /*
-             * exit game
-             */
-            Exit.exitGame();
-        }
     }
 
     /**
