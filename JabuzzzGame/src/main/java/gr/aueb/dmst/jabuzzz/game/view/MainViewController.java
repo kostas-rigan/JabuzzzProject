@@ -1,6 +1,7 @@
 package main.java.gr.aueb.dmst.jabuzzz.game.view;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.TimerTask;
@@ -335,8 +336,8 @@ public class MainViewController implements Initializable {
      * TODO: change it to load questions more dynamically.
      */
     private void loadQuestions() {
-        for (int i = 1; i <= 5; i++) {
-            new Question(dbconnector.selectQuestion("Geography", i));
+        for (int i = 1; i <= 23; i++) {
+        	new Question(dbconnector.selectQuestion("Geography", i));
         }
     }
 

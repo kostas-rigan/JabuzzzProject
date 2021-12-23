@@ -1,5 +1,6 @@
 package main.java.gr.aueb.dmst.jabuzzz.entities;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -11,10 +12,10 @@ import java.util.Random;
  * @version 1.0 11/12/2021
  */
 public class Question {
-	public String question;
-	private static String[][] answer = new String[50][5];
-	private static String[] correctAnswer = new String[50];
-	private static String[] questions = new String[50];
+	public static ArrayList<String> correctAnswer = new ArrayList<String>();
+	public static ArrayList<String> questions = new ArrayList<String>();
+	public static ArrayList<ArrayList<String>> answer = new ArrayList();
+
 	private static int numberOfQuestions = 0;
 
 	/*
@@ -27,18 +28,21 @@ public class Question {
 	 * @param questionAndAnswers
 	 */
 	public Question(String[] questionAndAnswers) {
-		questions[numberOfQuestions] = (questionAndAnswers[0]);
-		
+		questions.add(questionAndAnswers[0]);
+
 		/*
 		 * initialization of the Array answer
 		 */
+		ArrayList<String> temp2 = new ArrayList();
 		for (int i = 1; i < questionAndAnswers.length; i++) {
-			Question.answer[numberOfQuestions][i - 1] = questionAndAnswers[i];
+			temp2.add(questionAndAnswers[i]);
 		}
+		Question.answer.add(temp2);
+
 		/*
 		 * initialization of the correctAnswer
 		 */
-		Question.correctAnswer[numberOfQuestions] = questionAndAnswers[1];
+		Question.correctAnswer.add(questionAndAnswers[1]);
 		numberOfQuestions++;
 		shuffleAnswers();
 	}
@@ -51,11 +55,11 @@ public class Question {
 		int index;
 		String temp;
 		Random random = new Random();
-		for (int i = answer[numberOfQuestions - 1].length - 1; i > 0; i--) {
+		for (int i = answer.get(numberOfQuestions - 1).size() - 1; i > 0; i--) {
 			index = random.nextInt(i + 1);
-			temp = answer[numberOfQuestions - 1][index];
-			answer[numberOfQuestions - 1][index] = answer[numberOfQuestions - 1][i];
-			answer[numberOfQuestions - 1][i] = temp;
+			temp = answer.get(numberOfQuestions - 1).get(index);
+			answer.get(numberOfQuestions - 1).set(index, answer.get(numberOfQuestions - 1).get(i));
+			answer.get(numberOfQuestions - 1).set(i, temp);
 		}
 	}
 
@@ -67,7 +71,7 @@ public class Question {
 	 */
 	public int findAnswer() {
 		for (int i = 0; i < 5; i++) {
-			if (Question.answer[numberOfQuestions - 1][i] == correctAnswer[numberOfQuestions]) {
+			if (Question.answer.get(numberOfQuestions - 1).get(i) == correctAnswer.get(numberOfQuestions - 1)) {
 				return i;
 			}
 		}
@@ -82,19 +86,20 @@ public class Question {
 	public static void shuffleQuestion() {
 		int index;
 		String temp;
-		String[] temp2 = new String[5];
+
 		Random random = new Random();
 		for (int i = numberOfQuestions - 1; i > 0; i--) {
+			ArrayList<String> temp2 = new ArrayList<String>();
 			index = random.nextInt(i + 1);
-			temp = questions[index];
-			questions[index] = questions[i];
-			questions[i] = temp;
-			temp2 = answer[index];
-			answer[index] = answer[i];
-			answer[i] = temp2;
-			temp = correctAnswer[index];
-			correctAnswer[index] = correctAnswer[i];
-			correctAnswer[i] = temp;
+			temp = questions.get(index);
+			questions.set(index, questions.get(i));
+			questions.set(i, temp);
+			temp2.addAll(answer.get(index));
+			answer.set(index, answer.get(i));
+			answer.set(i, temp2);
+			temp = correctAnswer.get(index);
+			correctAnswer.set(index, correctAnswer.get(i));
+			correctAnswer.set(i, temp);
 		}
 	}
 
@@ -104,7 +109,7 @@ public class Question {
 	 * @return r witch is the last question.
 	 */
 	public static String getQuestions(int questionIndex) {
-		String r = questions[questionIndex];
+		String r = questions.get(questionIndex);
 		return r;
 	}
 
@@ -116,30 +121,34 @@ public class Question {
 	 * addQuestion is used to add a new question with the potential answers
 	 */
 	public void addQuestion(String[] questionAndAnswers) {
-		questions[numberOfQuestions] = (questionAndAnswers[0]);
-		numberOfQuestions++;
+		questions.add(questionAndAnswers[0]);
 		/*
 		 * initialization of the Array answer
 		 */
+		ArrayList<String> temp2 = new ArrayList();
 		for (int i = 1; i < questionAndAnswers.length; i++) {
-			Question.answer[numberOfQuestions - 1][i - 1] = questionAndAnswers[i];
+			temp2.add(questionAndAnswers[i]);
 		}
+		Question.answer.add(temp2);
 		/*
 		 * initialization of the correctAnswer
 		 */
-		correctAnswer[numberOfQuestions] = questionAndAnswers[1];
+		correctAnswer.add(questionAndAnswers[1]);
+		numberOfQuestions++;
+		shuffleAnswers();
 	}
 
 	public static String getAnswer(int questionIndex, int answerIndex) {
-		return answer[questionIndex][answerIndex];
+		return answer.get(questionIndex).get(answerIndex);
 	}
 
 	/**
 	 * This method returns the correct answer of a specified question.
+	 * 
 	 * @param questionIndex
 	 * @return a String containing the correct answer of a question
 	 */
 	public static String getCorrectAnswer(int questionIndex) {
-	    return correctAnswer[questionIndex];
+		return correctAnswer.get(questionIndex);
 	}
 }
