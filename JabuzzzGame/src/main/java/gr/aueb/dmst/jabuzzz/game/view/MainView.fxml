@@ -77,10 +77,10 @@
          <children>
             <Button fx:id="exitButton" mnemonicParsing="false" onAction="#Exit" style="-fx-background-color: #c95d6a;" text="Έξοδος">
                <HBox.margin>
-                  <Insets left="25.0" top="25.0" />
+                  <Insets left="24.0" top="28.0" />
                </HBox.margin>
                <font>
-                  <Font name="Comic Sans MS Bold Italic" size="15.0" />
+                  <Font name="Comic Sans MS Bold" size="18.0" />
                </font>
             </Button>
             <Region prefHeight="100.0" prefWidth="350.0" />
