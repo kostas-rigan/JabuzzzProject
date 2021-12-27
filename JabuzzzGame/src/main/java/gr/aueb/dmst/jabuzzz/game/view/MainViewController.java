@@ -2,6 +2,7 @@ package main.java.gr.aueb.dmst.jabuzzz.game.view;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.TimerTask;
@@ -95,6 +96,9 @@ public class MainViewController implements Initializable {
 
     @FXML
     private Label timerLabel;
+    
+    @FXML
+    private Label plays;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -144,6 +148,8 @@ public class MainViewController implements Initializable {
                 playingTeam = teamBArea.getText();
             }
 
+            plays.setText("Παίξε " + playingTeam);
+            plays.setOpacity(1);
             Label[] labels = { teamAArea, teamBArea };
             buzzer.buzz(keyEvent.getCode(), labels);
             // important to reinitialize timer object for controlTimeUp
@@ -193,6 +199,7 @@ public class MainViewController implements Initializable {
         setNewQA();
         nextButton.setOpacity(0);
         nextButton.setDisable(true);
+        plays.setOpacity(0);
         unselectButton();
         resetRadioButtonBGColour();
     }
@@ -332,12 +339,15 @@ public class MainViewController implements Initializable {
 
     /*
      * Loads questions from database, depending on categories given in game setup.
-     * 
-     * TODO: change it to load questions more dynamically.
      */
     private void loadQuestions() {
-        for (int i = 1; i <= 23; i++) {
-        	new Question(dbconnector.selectQuestion("Geography", i));
+        ArrayList<String> categoryNames = GameSetUpController.categoryNames();
+        ArrayList<Integer> questIds = new ArrayList<Integer>();
+        for (String category : categoryNames) {
+            questIds.addAll(dbconnector.selectQuestionId(category));
+        }
+        for (int i = 0; i < questIds.size(); i++) {
+        	new Question(dbconnector.selectQuestion(questIds.get(i)));
         }
     }
 

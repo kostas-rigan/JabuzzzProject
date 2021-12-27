@@ -1,77 +1,48 @@
 package main.java.gr.aueb.dmst.jabuzzz.entities;
 /**
  * Class Category is responsible for which categories the player will play.
- * @version 1.0 25/11/2021
+ * @version 1.1 27/12/2021
  */
 public class Category {
-	/*
-	 *mythology displays whether the player
-	 *has selected this category or not.
-	 */
-	private boolean mythology;
-	/*
-	 * geography displays whether the player 
-	 * has selected this category or not.
-	 */
-	private boolean geography;
-	/*
-	 * history displays whether the player 
-	 * has selected this category or not.
-	 */
-	private boolean history;
-
-	/*
-	 * Class constructor with default values.
-	 */
-	public Category() {
-		mythology = false;
-		geography = false;
-		history = false;
-	}
-
     /**
-     * Specifies new geography value.
-     * @param new value for geography.
+     * categoryName is the identifier of each Category object.
      */
-	public void setGeography(boolean geography) {
-		this.geography = geography;
+	private String categoryName;
+	/**
+	 * isSelected contains information about being selected in the game,
+	 * true if it is selected and false otherwise.
+	 */
+	private boolean isSelected;
+
+	/*
+	 * Class constructor initialising categoryName field.
+	 */
+	public Category(String catName) {
+	    this.categoryName = catName;
+	}
+	
+	/**
+	 * @return category identifier.
+	 */
+	public String getCategoryName() {
+	    return this.categoryName;
 	}
 
-    /**
-     * Specifies new history value.
-     * @param new value for history.
-     */
-	public void setHistory(boolean history) {
-		this.history = history;
+	/**
+	 * Sets the value for isSelected to true if players select this category
+	 * and false if it is not selected.
+	 * @param selected true or false, depending on whether it is selected or not.
+	 */
+	public void setSelected(boolean selected) {
+	    this.isSelected = selected;
 	}
-
-    /**
-     * Specifies new mythology value.
-     * @param new value for mythology.
-     */
-	public void setMythology(boolean mythology) {
-		this.mythology = mythology;
+	
+	/**
+	 * Returns the value of isSelected field, which informs about the selection state
+	 * of this category.
+	 * @return true if selected or false if not selected
+	 */
+	public boolean getSelected() {
+	    return this.isSelected;
 	}
-
-    /**
-    * @return geography current value.
-    */
-	public boolean getGeography() {
-		return geography;
-	}
-
-    /**
-    * @return history current value.
-    */
-	public boolean getMythology() {
-		return mythology;
-	}
-
-    /**
-    * @return history current value.
-    */
-	public boolean getHistory() {
-		return history;
-	}
-
 }

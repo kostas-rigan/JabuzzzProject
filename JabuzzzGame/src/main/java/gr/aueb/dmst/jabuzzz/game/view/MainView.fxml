@@ -83,15 +83,21 @@
                   <Font name="Comic Sans MS Bold Italic" size="15.0" />
                </font>
             </Button>
-            <Region prefHeight="100.0" prefWidth="350.0" />
-            <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" text="Label" textFill="#c31919">
-               <HBox.margin>
-                  <Insets top="25.0" />
-               </HBox.margin>
-               <font>
-                  <Font name="Comic Sans MS Italic" size="34.0" />
-               </font>
-            </Label>
+            <Region prefHeight="100.0" prefWidth="285.0" />
+            <VBox prefHeight="100.0" prefWidth="198.0">
+               <children>
+                  <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="49.0" prefWidth="201.0" text="Label" textFill="#c31919">
+                     <font>
+                        <Font name="Comic Sans MS Italic" size="34.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="plays" alignment="CENTER" opacity="0.0" prefHeight="52.0" prefWidth="202.0" text="plays">
+                     <font>
+                        <Font name="Comic Sans MS" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
          </children>
       </HBox>
    </top>
