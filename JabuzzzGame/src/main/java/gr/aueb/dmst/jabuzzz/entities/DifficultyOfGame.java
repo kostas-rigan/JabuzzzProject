@@ -2,20 +2,20 @@ package main.java.gr.aueb.dmst.jabuzzz.entities;
 
 public class DifficultyOfGame {
     // number of answer
-    public static int numberOfAnswers;
+    private static int numberOfAnswers;
 
-    public enum Difficulty {
+    public static enum Difficulty {
         EASY, NORMAL, HARD
     }
 
-    Difficulty difficulty;
+    static Difficulty difficulty;
 
     // constructor to select difficulty of game(Difficulty obj1 = Difficulty.NORMAL)
-    public DifficultyOfGame(Difficulty difficulty) {
-        this.difficulty = difficulty;
+    public DifficultyOfGame(Difficulty diff) {
+        difficulty = diff;
     }
 
-    public void handleDifficulty() {
+    public static void handleDifficulty() {
         switch (difficulty) {
         case EASY:
             numberOfAnswers = 3;
@@ -29,4 +29,5 @@ public class DifficultyOfGame {
         }
 
     }
+
 }

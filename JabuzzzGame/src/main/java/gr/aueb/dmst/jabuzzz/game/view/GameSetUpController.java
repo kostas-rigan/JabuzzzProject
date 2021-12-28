@@ -13,6 +13,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import main.java.gr.aueb.dmst.jabuzzz.entities.Category;
 import main.java.gr.aueb.dmst.jabuzzz.entities.DifficultyOfGame;
+import main.java.gr.aueb.dmst.jabuzzz.entities.DifficultyOfGame.Difficulty;
 import main.java.gr.aueb.dmst.jabuzzz.game.Main;
 
 public class GameSetUpController implements Initializable {
@@ -21,6 +22,7 @@ public class GameSetUpController implements Initializable {
     static String nameA;
     static String nameB;
     static int goal;
+    private static Difficulty level = null;
     private static Category geo;
     private static Category hist;
     private static Category myth;
@@ -56,6 +58,7 @@ public class GameSetUpController implements Initializable {
         geo.setSelected(geography.isSelected());
         hist.setSelected(history.isSelected());
         diffLevel = difficulty.getValue();
+        setDifficultyOfGame();
 
         LetsGo();
     }
@@ -83,11 +86,11 @@ public class GameSetUpController implements Initializable {
     // method that creates the difficulty object
     public void setDifficultyOfGame() {
         if (diffLevel.equals("Εύκολο")) {
-            final DifficultyOfGame.Difficulty easy = DifficultyOfGame.Difficulty.EASY;
+            level = DifficultyOfGame.Difficulty.EASY;
         } else if (diffLevel.equals("Κανονικό")) {
-            final DifficultyOfGame.Difficulty easy = DifficultyOfGame.Difficulty.EASY;
+            level = DifficultyOfGame.Difficulty.NORMAL;
         } else {
-            final DifficultyOfGame.Difficulty easy = DifficultyOfGame.Difficulty.EASY;
+            level = DifficultyOfGame.Difficulty.HARD;
         }
 
     }
@@ -114,5 +117,16 @@ public class GameSetUpController implements Initializable {
         }
         
         return catNames;
+    }
+
+    public static int getNumberOfAnswers() {
+        switch (level) {
+        case EASY:
+            return 3;
+        case NORMAL:
+            return 4;
+        default:
+            return 5;
+        }
     }
 }

@@ -51,6 +51,7 @@ public class MainViewController implements Initializable {
     private IntegerProperty timeSeconds = new SimpleIntegerProperty(INITIAL_SECOND);
     private Timeline timeline;
     private int pointsToFinish;
+    private int numberOfAnswers;
 
     @FXML
     private ToggleGroup Options;
@@ -102,6 +103,10 @@ public class MainViewController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        changeTraversability();
+        disableButtons();
+        numberOfAnswers = GameSetUpController.getNumberOfAnswers();
+        editToggleGroup(numberOfAnswers);
         dbconnector.connect();
         loadQuestions();
         Question.shuffleQuestion();
@@ -123,9 +128,19 @@ public class MainViewController implements Initializable {
         timer = new Timer(timerLabel);
 
         pointsToFinish = GameSetUpController.getFinishPoints();
+    }
 
-        changeTraversability();
-        disableButtons();
+    private void editToggleGroup(int numbOfAnswers) {
+        if (numbOfAnswers == 3) {
+            answerD.setToggleGroup(null);
+            answerD.setOpacity(0);
+            answerE.setToggleGroup(null);
+            answerE.setOpacity(0);
+        } else if (numbOfAnswers == 4) {
+            answerE.setToggleGroup(null);
+            answerE.setOpacity(0);
+        }
+        
     }
 
     /**
@@ -346,8 +361,33 @@ public class MainViewController implements Initializable {
         for (String category : categoryNames) {
             questIds.addAll(dbconnector.selectQuestionId(category));
         }
+        
         for (int i = 0; i < questIds.size(); i++) {
-        	new Question(dbconnector.selectQuestion(questIds.get(i)));
+            /*
+             * Check if correct answer is in the first numberOfAnswers array cells.
+             * If it is then it will continue.
+             * Otherwise it will remove the question and re add it.
+             */
+        	while (true) {
+        	    
+        	    boolean correctAnswerExists = false;
+        	    new Question(dbconnector.selectQuestion(questIds.get(i)));
+        	    String currentCorrectAnswer = Question.correctAnswer.get(i);
+        	    
+        	    for (int j = 0; j < numberOfAnswers; j++) {
+        	        String currentAnswer = Question.answer.get(i).get(j);
+        	        
+        	        if (currentAnswer.equals(currentCorrectAnswer)) {
+        	            correctAnswerExists = true;
+        	            break;
+        	        }
+        	    }
+        	    if (correctAnswerExists) {
+        	        break;
+        	    }
+        	    
+        	    Question.popQuestion();
+        	}
         }
     }
 

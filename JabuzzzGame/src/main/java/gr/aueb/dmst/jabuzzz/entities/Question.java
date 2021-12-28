@@ -14,7 +14,7 @@ import java.util.Random;
 public class Question {
 	public static ArrayList<String> correctAnswer = new ArrayList<String>();
 	public static ArrayList<String> questions = new ArrayList<String>();
-	public static ArrayList<ArrayList<String>> answer = new ArrayList();
+	public static ArrayList<ArrayList<String>> answer = new ArrayList<ArrayList<String>>();
 
 	private static int numberOfQuestions = 0;
 
@@ -33,7 +33,7 @@ public class Question {
 		/*
 		 * initialization of the Array answer
 		 */
-		ArrayList<String> temp2 = new ArrayList();
+		ArrayList<String> temp2 = new ArrayList<String>();
 		for (int i = 1; i < questionAndAnswers.length; i++) {
 			temp2.add(questionAndAnswers[i]);
 		}
@@ -136,6 +136,16 @@ public class Question {
 		correctAnswer.add(questionAndAnswers[1]);
 		numberOfQuestions++;
 		shuffleAnswers();
+	}
+	
+	/*
+	 * popQuestions removes the latest added question with its answers and correct answer.
+	 */
+	public static void popQuestion() {
+	    questions.remove(questions.size() - 1);
+	    answer.remove(answer.size() - 1);
+	    correctAnswer.remove(correctAnswer.size() - 1);
+	    numberOfQuestions--;
 	}
 
 	public static String getAnswer(int questionIndex, int answerIndex) {
