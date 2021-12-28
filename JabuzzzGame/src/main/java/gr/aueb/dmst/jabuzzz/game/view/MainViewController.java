@@ -2,6 +2,7 @@ package main.java.gr.aueb.dmst.jabuzzz.game.view;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.TimerTask;
@@ -50,6 +51,7 @@ public class MainViewController implements Initializable {
     private IntegerProperty timeSeconds = new SimpleIntegerProperty(INITIAL_SECOND);
     private Timeline timeline;
     private int pointsToFinish;
+    private int numberOfAnswers;
 
     @FXML
     private ToggleGroup Options;
@@ -95,9 +97,16 @@ public class MainViewController implements Initializable {
 
     @FXML
     private Label timerLabel;
+    
+    @FXML
+    private Label plays;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        changeTraversability();
+        disableButtons();
+        numberOfAnswers = GameSetUpController.getNumberOfAnswers();
+        editToggleGroup(numberOfAnswers);
         dbconnector.connect();
         loadQuestions();
         Question.shuffleQuestion();
@@ -119,9 +128,19 @@ public class MainViewController implements Initializable {
         timer = new Timer(timerLabel);
 
         pointsToFinish = GameSetUpController.getFinishPoints();
+    }
 
-        changeTraversability();
-        disableButtons();
+    private void editToggleGroup(int numbOfAnswers) {
+        if (numbOfAnswers == 3) {
+            answerD.setToggleGroup(null);
+            answerD.setOpacity(0);
+            answerE.setToggleGroup(null);
+            answerE.setOpacity(0);
+        } else if (numbOfAnswers == 4) {
+            answerE.setToggleGroup(null);
+            answerE.setOpacity(0);
+        }
+        
     }
 
     /**
@@ -144,6 +163,8 @@ public class MainViewController implements Initializable {
                 playingTeam = teamBArea.getText();
             }
 
+            plays.setText("Παίξε " + playingTeam);
+            plays.setOpacity(1);
             Label[] labels = { teamAArea, teamBArea };
             buzzer.buzz(keyEvent.getCode(), labels);
             // important to reinitialize timer object for controlTimeUp
@@ -193,6 +214,7 @@ public class MainViewController implements Initializable {
         setNewQA();
         nextButton.setOpacity(0);
         nextButton.setDisable(true);
+        plays.setOpacity(0);
         unselectButton();
         resetRadioButtonBGColour();
     }
@@ -332,12 +354,40 @@ public class MainViewController implements Initializable {
 
     /*
      * Loads questions from database, depending on categories given in game setup.
-     * 
-     * TODO: change it to load questions more dynamically.
      */
     private void loadQuestions() {
-        for (int i = 1; i <= 23; i++) {
-        	new Question(dbconnector.selectQuestion("Geography", i));
+        ArrayList<String> categoryNames = GameSetUpController.categoryNames();
+        ArrayList<Integer> questIds = new ArrayList<Integer>();
+        for (String category : categoryNames) {
+            questIds.addAll(dbconnector.selectQuestionId(category));
+        }
+        
+        for (int i = 0; i < questIds.size(); i++) {
+            /*
+             * Check if correct answer is in the first numberOfAnswers array cells.
+             * If it is then it will continue.
+             * Otherwise it will remove the question and re add it.
+             */
+        	while (true) {
+        	    
+        	    boolean correctAnswerExists = false;
+        	    new Question(dbconnector.selectQuestion(questIds.get(i)));
+        	    String currentCorrectAnswer = Question.correctAnswer.get(i);
+        	    
+        	    for (int j = 0; j < numberOfAnswers; j++) {
+        	        String currentAnswer = Question.answer.get(i).get(j);
+        	        
+        	        if (currentAnswer.equals(currentCorrectAnswer)) {
+        	            correctAnswerExists = true;
+        	            break;
+        	        }
+        	    }
+        	    if (correctAnswerExists) {
+        	        break;
+        	    }
+        	    
+        	    Question.popQuestion();
+        	}
         }
     }
 

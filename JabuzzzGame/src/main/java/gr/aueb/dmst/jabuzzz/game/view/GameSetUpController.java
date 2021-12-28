@@ -2,6 +2,7 @@ package main.java.gr.aueb.dmst.jabuzzz.game.view;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -10,7 +11,9 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import main.java.gr.aueb.dmst.jabuzzz.entities.Category;
 import main.java.gr.aueb.dmst.jabuzzz.entities.DifficultyOfGame;
+import main.java.gr.aueb.dmst.jabuzzz.entities.DifficultyOfGame.Difficulty;
 import main.java.gr.aueb.dmst.jabuzzz.game.Main;
 
 public class GameSetUpController implements Initializable {
@@ -19,9 +22,10 @@ public class GameSetUpController implements Initializable {
     static String nameA;
     static String nameB;
     static int goal;
-    static boolean myth;
-    static boolean geo;
-    static boolean hist;
+    private static Difficulty level = null;
+    private static Category geo;
+    private static Category hist;
+    private static Category myth;
 
     @FXML
     private TextField teamAField;
@@ -44,15 +48,17 @@ public class GameSetUpController implements Initializable {
     @FXML
     private ChoiceBox<String> difficulty;
 
+    // TODO: Handle the event where no category is selected, until there is at least one selected
     @FXML
     public void start() throws IOException {
         nameA = teamAField.getText();
         nameB = teamBField.getText();
         goal = (int) pointsToFinish.getValue();
-        myth = mythology.isSelected();
-        geo = geography.isSelected();
-        hist = history.isSelected();
+        myth.setSelected(mythology.isSelected());
+        geo.setSelected(geography.isSelected());
+        hist.setSelected(history.isSelected());
         diffLevel = difficulty.getValue();
+        setDifficultyOfGame();
 
         LetsGo();
     }
@@ -72,21 +78,55 @@ public class GameSetUpController implements Initializable {
         difficulty.setValue("Κανονικό");
         teamAField.setText("Ομάδα Α");
         teamBField.setText("Ομάδα Β");
+        geo = new Category("Geography");
+        hist = new Category("History");
+        myth = new Category("Mythology");
     }
 
     // method that creates the difficulty object
     public void setDifficultyOfGame() {
         if (diffLevel.equals("Εύκολο")) {
-            final DifficultyOfGame.Difficulty easy = DifficultyOfGame.Difficulty.EASY;
+            level = DifficultyOfGame.Difficulty.EASY;
         } else if (diffLevel.equals("Κανονικό")) {
-            final DifficultyOfGame.Difficulty easy = DifficultyOfGame.Difficulty.EASY;
+            level = DifficultyOfGame.Difficulty.NORMAL;
         } else {
-            final DifficultyOfGame.Difficulty easy = DifficultyOfGame.Difficulty.EASY;
+            level = DifficultyOfGame.Difficulty.HARD;
         }
 
     }
 
     public static int getFinishPoints() {
         return goal;
+    }
+    
+    /**
+     * Examines all of the categories if they are selected, in which case
+     * they are added in an array list and are returned to the user.
+     * @return an ArrayList of String that contains the names of selected categories.
+     */
+    public static ArrayList<String> categoryNames() {
+        ArrayList<String> catNames = new ArrayList<String>();
+        if (geo.getSelected()) {
+            catNames.add(geo.getCategoryName());
+        }
+        if (hist.getSelected()) {
+            catNames.add(hist.getCategoryName());
+        }
+        if (myth.getSelected()) {
+            catNames.add(myth.getCategoryName());
+        }
+        
+        return catNames;
+    }
+
+    public static int getNumberOfAnswers() {
+        switch (level) {
+        case EASY:
+            return 3;
+        case NORMAL:
+            return 4;
+        default:
+            return 5;
+        }
     }
 }
