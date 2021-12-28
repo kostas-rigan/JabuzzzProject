@@ -211,6 +211,10 @@ public class MainViewController implements Initializable {
     void setNextQuestion(ActionEvent event) {
         timeSeconds.set(INITIAL_SECOND);
         quest++;
+        if (quest == Question.getNumberOfQuestions()) {
+        	quest = 0;
+        	Question.shuffleQuestion();
+        }
         setNewQA();
         nextButton.setOpacity(0);
         nextButton.setDisable(true);
