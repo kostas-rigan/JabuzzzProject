@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="673.0" prefWidth="985.0" style="-fx-background-color: #e1eef9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.gr.aueb.dmst.jabuzzz.game.view.GameSetUpController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="673.0" prefWidth="985.0" style="-fx-background-color: #e1eef9;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.gr.aueb.dmst.jabuzzz.game.view.GameSetUpController">
    <children>
       <TextField fx:id="teamAField" layoutX="273.0" layoutY="115.0" promptText="ΟμάδαΑ" />
       <TextField fx:id="teamBField" layoutX="273.0" layoutY="164.0" promptText="ΟμάδαΒ" />
@@ -30,7 +30,7 @@
             <Font size="20.0" />
          </font>
       </CheckBox>
-      <Text layoutX="53.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Κατηγορίες:" wrappingWidth="169.24558132886887">
+      <Text layoutX="53.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Κατηγορίες:" wrappingWidth="169.24558132886887">
          <font>
             <Font size="25.0" />
          </font>
@@ -71,5 +71,15 @@
             <Image url="@../../../../../../../resources/photos/GameIcon.png" />
          </image>
       </ImageView>
+      <Text fill="#bc2e46" layoutX="53.0" layoutY="596.0" strokeType="OUTSIDE" strokeWidth="0.0" text="* :  Υποχρεωτικό πεδίο" wrappingWidth="274.74269104003895">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fill="#bc2e46" layoutX="211.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
