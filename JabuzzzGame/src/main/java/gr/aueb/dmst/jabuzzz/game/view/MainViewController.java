@@ -374,19 +374,13 @@ public class MainViewController implements Initializable {
              */
         	while (true) {
         	    
-        	    boolean correctAnswerExists = false;
         	    new Question(dbconnector.selectQuestion(questIds.get(i)));
         	    String currentCorrectAnswer = Question.correctAnswer.get(i);
+        	    ArrayList<String> currentQuestionAnswers = Question.answer.get(i);
         	    
-        	    for (int j = 0; j < numberOfAnswers; j++) {
-        	        String currentAnswer = Question.answer.get(i).get(j);
-        	        
-        	        if (currentAnswer.equals(currentCorrectAnswer)) {
-        	            correctAnswerExists = true;
-        	            break;
-        	        }
-        	    }
-        	    if (correctAnswerExists) {
+        	    int index = currentQuestionAnswers.indexOf(currentCorrectAnswer);
+        	    
+        	    if (index < numberOfAnswers) {
         	        break;
         	    }
         	    
