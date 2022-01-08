@@ -7,6 +7,8 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
@@ -59,6 +61,14 @@ public class GameSetUpController implements Initializable {
         hist.setSelected(history.isSelected());
         diffLevel = difficulty.getValue();
         setDifficultyOfGame();
+        
+        if (myth.getSelected() == false && geo.getSelected() == false && hist.getSelected() == false) {
+        	Alert alert = new Alert(Alert.AlertType.WARNING);
+        	alert.setTitle("Warning");
+        	alert.setContentText("Πρέπει να επιλέξετε"
+        			+ " κατηγορία για να ξεκινήσει το παιχνίδι!");
+        	alert.show();
+        }
 
         LetsGo();
     }
