@@ -67,9 +67,11 @@ public class GameSetUpController implements Initializable {
         	alert.setTitle("Warning");
         	alert.setContentText("Επιλέξτε κατηγορία και... Καλή Διασκέδαση!");
         	alert.show();
+        } else {
+            LetsGo();
         }
 
-        LetsGo();
+        
     }
 
     @FXML
