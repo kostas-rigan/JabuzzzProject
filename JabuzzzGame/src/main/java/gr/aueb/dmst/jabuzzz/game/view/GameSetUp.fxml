@@ -71,15 +71,5 @@
             <Image url="@../../../../../../../resources/photos/GameIcon.png" />
          </image>
       </ImageView>
-      <Text fill="#bc2e46" layoutX="53.0" layoutY="596.0" strokeType="OUTSIDE" strokeWidth="0.0" text="* :  Υποχρεωτικό πεδίο" wrappingWidth="274.74269104003895">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Text>
-      <Text fill="#bc2e46" layoutX="211.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
-         <font>
-            <Font size="26.0" />
-         </font>
-      </Text>
    </children>
 </AnchorPane>

@@ -53,7 +53,7 @@ public class GameSetUpController implements Initializable {
     // TODO: Handle the event where no category is selected, until there is at least one selected
     @FXML
     public void start() throws IOException {
-        nameA = teamAField.getText();
+    	nameA = teamAField.getText();
         nameB = teamBField.getText();
         goal = (int) pointsToFinish.getValue();
         myth.setSelected(mythology.isSelected());
@@ -65,8 +65,7 @@ public class GameSetUpController implements Initializable {
         if (myth.getSelected() == false && geo.getSelected() == false && hist.getSelected() == false) {
         	Alert alert = new Alert(Alert.AlertType.WARNING);
         	alert.setTitle("Warning");
-        	alert.setContentText("Πρέπει να επιλέξετε"
-        			+ " κατηγορία για να ξεκινήσει το παιχνίδι!");
+        	alert.setContentText("Επιλέξτε κατηγορία και... Καλή Διασκέδαση!");
         	alert.show();
         }
 
