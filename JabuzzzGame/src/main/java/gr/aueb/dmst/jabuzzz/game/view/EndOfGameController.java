@@ -36,6 +36,10 @@ public class EndOfGameController implements Initializable {
 			
 		}
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 7dced364dc8e82d40e6c335f390505726a50ca95
 }
+
