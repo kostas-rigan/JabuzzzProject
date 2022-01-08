@@ -1,5 +1,6 @@
 package main.java.gr.aueb.dmst.jabuzzz.game.view;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -25,7 +26,7 @@ public class EndOfGameController implements Initializable {
 	    }
 
 	    @FXML
-	    void GoToGameSetUp() {
+	    void GoToGameSetUp() throws IOException {
 	    	Main.showGameSetUp();
 	    }
 
@@ -35,7 +36,5 @@ public class EndOfGameController implements Initializable {
 			
 		}
 
-	}
-
-
 }
+
