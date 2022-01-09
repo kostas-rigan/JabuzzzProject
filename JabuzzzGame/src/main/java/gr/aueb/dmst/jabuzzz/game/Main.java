@@ -68,6 +68,11 @@ public class Main extends Application {
 		String resource = "view/MainMenu.fxml";
         show(mainLayoutAnchorPane, resource);
 	}
+	
+	public static void showEndOfGame() throws IOException {
+	    String resource = "view/EndOfGame.fxml";
+	    show(mainLayoutAnchorPane, resource);
+	}
 
 	/*
 	 * show is a private method that needs two parameters: a Parent object and a String

@@ -1,5 +1,6 @@
 package main.java.gr.aueb.dmst.jabuzzz.game.view;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -32,13 +33,14 @@ import main.java.gr.aueb.dmst.jabuzzz.entities.Question;
 import main.java.gr.aueb.dmst.jabuzzz.entities.Score;
 import main.java.gr.aueb.dmst.jabuzzz.dbconnector.DBConnector;
 import main.java.gr.aueb.dmst.jabuzzz.entities.Team;
+import main.java.gr.aueb.dmst.jabuzzz.game.Main;
 import main.java.gr.aueb.dmst.jabuzzz.utilities.Buzzer;
 import main.java.gr.aueb.dmst.jabuzzz.utilities.Timer;
 
 public class MainViewController implements Initializable {
 
     private static final int INITIAL_SECOND = 5;
-    private int quest = 0;
+    private int quest;
     private Buzzer buzzer = new Buzzer();
     private DBConnector dbconnector = new DBConnector();
     private Score scoreA;
@@ -52,6 +54,7 @@ public class MainViewController implements Initializable {
     private Timeline timeline;
     private int pointsToFinish;
     private int numberOfAnswers;
+    private static String winnerTeam;
 
     @FXML
     private ToggleGroup Options;
@@ -103,6 +106,7 @@ public class MainViewController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+        quest = 0;
         changeTraversability();
         disableButtons();
         numberOfAnswers = GameSetUpController.getNumberOfAnswers();
@@ -221,6 +225,10 @@ public class MainViewController implements Initializable {
         plays.setOpacity(0);
         unselectButton();
         resetRadioButtonBGColour();
+    }
+    
+    public static String getWinnerTeam() {
+        return winnerTeam;
     }
 
     /*
@@ -441,13 +449,13 @@ public class MainViewController implements Initializable {
     private void checkGameOver() {
         if (playingTeamScore.getTeamsScore() == pointsToFinish) {
             hideAndDisableInWinner();
-            showWinner(playingTeam);
+            inititateEndOfGame(playingTeam);
         } else if (playingTeamScore.getTeamsScore() == -5){
             hideAndDisableInWinner();
             if (playingTeam.equals(teamAArea.getText())) {
-                showWinner(teamBArea.getText());
+                inititateEndOfGame(teamBArea.getText());
             } else {
-                showWinner(teamAArea.getText());
+                inititateEndOfGame(teamAArea.getText());
             }
         }
     }
@@ -455,9 +463,14 @@ public class MainViewController implements Initializable {
     /*
      * Show the winning team, which is given by a String representation.
      */
-    private void showWinner(String winnerTeam) {
-        String winningMessage = "\tΤέλος Παιχνιδιού\nΗ ομάδα " + winnerTeam + " κέρδισε!!";
-        questionArea.setText(winningMessage);
+    private void inititateEndOfGame(String winTeam) {
+        winnerTeam = winTeam;
+        Question.cleanQuestions();
+        try {
+            Main.showEndOfGame();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /*

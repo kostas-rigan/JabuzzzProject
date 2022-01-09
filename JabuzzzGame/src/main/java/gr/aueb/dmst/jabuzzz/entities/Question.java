@@ -161,4 +161,14 @@ public class Question {
 	public static String getCorrectAnswer(int questionIndex) {
 		return correctAnswer.get(questionIndex);
 	}
+	
+	/**
+	 * When the game ends this method is called to clean the lists, and make them equal to null.
+	 */
+	public static void cleanQuestions() {
+	    correctAnswer.clear();
+	    questions.clear();
+	    answer.clear();
+	    numberOfQuestions = 0;
+	}
 }

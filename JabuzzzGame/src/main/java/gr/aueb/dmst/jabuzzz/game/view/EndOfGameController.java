@@ -32,14 +32,7 @@ public class EndOfGameController implements Initializable {
 
 		@Override
 		public void initialize(URL arg0, ResourceBundle arg1) {
-			// TODO Auto-generated method stub
-			
+		    winnerName.setText(MainViewController.getWinnerTeam());
 		}
-
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 7dced364dc8e82d40e6c335f390505726a50ca95
 }
 
