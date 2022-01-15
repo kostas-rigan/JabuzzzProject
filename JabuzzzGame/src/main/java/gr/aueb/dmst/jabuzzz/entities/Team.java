@@ -2,10 +2,9 @@ package main.java.gr.aueb.dmst.jabuzzz.entities;
 
 /**
  * Representation of Team concept.
- * 
+ *
  * @version 1.0 17/11/2021
  */
-
 public class Team {
     /** teamName is the name that describes a created Team. */
     private String teamName;
@@ -46,7 +45,7 @@ public class Team {
 
     /**
      * Represents a Team object by returning its name.
-     * 
+     *
      * @return name that defines a team
      */
     @Override
